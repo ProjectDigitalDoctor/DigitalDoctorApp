@@ -12,17 +12,18 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import TabScreen from './screens/TabScreen';
-import DrawerContent from './screens/DrawerContent';
+import TabScreen from './app/views/patient/TabScreen';
+import DrawerContent from './app/views/patient/DrawerContent';
+import Settings from './app/views/patient/Settings';
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent/>}>
-        <Drawer.Screen name="Home" component={TabScreen} />
-        {/*<Drawer.Screen name="Details" component={DetailsStackScreen} />*/}
+      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+        <Drawer.Screen name="TabScreen" component={TabScreen} />
+        <Drawer.Screen name="Settings" component={Settings} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

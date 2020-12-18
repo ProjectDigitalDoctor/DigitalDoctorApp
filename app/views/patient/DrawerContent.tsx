@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Drawer } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DrawerItem } from '@react-navigation/drawer';
 
-const DrawerContent = () => {
+function DrawerContent (props:any) {
     return(
         <View>
             <Drawer.Section>
@@ -17,7 +17,7 @@ const DrawerContent = () => {
                         />
                     )} 
                     label="Settings"
-                    onPress={() => {}}
+                    onPress={() => {props.navigation.navigate('Settings')}}
                 />
                 <DrawerItem
                     icon={({color,size}) => (

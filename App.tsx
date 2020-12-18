@@ -10,68 +10,20 @@
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import {
-  View,
-  Text,
-  Button,
-} from 'react-native';
 
-const HomeScreen = ({navigation}: {navigation: any}) => {
-  return (
-    <View style={{ flex:1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to details screen"
-        onPress={() => navigation.navigate("Details")}
-      />
-    </View>
-  );
-};
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import TabScreen from './screens/TabScreen';
+import DrawerContent from './screens/DrawerContent';
 
-const DetailsScreen = ({navigation}: {navigation: any}) => {
-  return (
-    <View style={{ flex:1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to details screen...again"
-        onPress={() => navigation.push("Details")}
-      />
-      <Button
-        title="Go to home"
-        onPress={() => navigation.navigate("Home")}
-      />
-      <Button
-        title="Go back"
-        onPress={() => navigation.goBack()}
-      />
-      <Button
-        title="Go to the first screen"
-        onPress={() => navigation.popToTop()}
-      />
-    </View>
-  );
-};
-
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerStyle: {
-          backgroundColor: '#32a852'
-        },
-        headerTintColor: '#fff',
-        headerBackTitleStyle: {
-          fontWeight: 'bold'
-        }
-      }}>
-        <Stack.Screen name="Home" component={HomeScreen} options={{
-          title:'Overview'
-        }} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
+      <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent/>}>
+        <Drawer.Screen name="Home" component={TabScreen} />
+        {/*<Drawer.Screen name="Details" component={DetailsStackScreen} />*/}
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

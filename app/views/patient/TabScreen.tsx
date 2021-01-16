@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -20,90 +20,134 @@ const AppointmentsStack = createStackNavigator();
 
 const HomeStackView = ({navigation}: {navigation: any}) => {
   return (
-    <HomeStack.Navigator screenOptions={{
+    <HomeStack.Navigator
+      screenOptions={{
         headerStyle: {
           backgroundColor: '#32a852',
         },
         headerTintColor: '#fff',
         headerBackTitleStyle: {
-          fontWeight: 'bold'
-        }
+          fontWeight: 'bold',
+        },
       }}>
-        <HomeStack.Screen name="Home" component={Home} options={{
-          title:'Home',
+      <HomeStack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: 'Home',
           headerLeft: () => (
-            <Icon.Button name="ios-menu" size = {25} 
-            backgroundColor="#32a852" onPress={() => {navigation.openDrawer()}} ></Icon.Button>
-          )
-      }} />
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
     </HomeStack.Navigator>
-  )
+  );
 };
 
 const FindDoctorStackView = ({navigation}: {navigation: any}) => {
   return (
-    <FindDoctorStack.Navigator screenOptions={{
+    <FindDoctorStack.Navigator
+      screenOptions={{
         headerStyle: {
-          backgroundColor: '#32a852'
+          backgroundColor: '#32a852',
         },
         headerTintColor: '#fff',
         headerBackTitleStyle: {
-          fontWeight: 'bold'
-        }
+          fontWeight: 'bold',
+        },
       }}>
-      <FindDoctorStack.Screen name="FindDoctor" component={FindDoctor} options={{
-        title:'FindDoctor',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size = {25} 
-          backgroundColor="#32a852" onPress={() => {navigation.openDrawer()}} ></Icon.Button>
-        )
-      }} />
+      <FindDoctorStack.Screen
+        name="FindDoctor"
+        component={FindDoctor}
+        options={{
+          title: 'FindDoctor',
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
     </FindDoctorStack.Navigator>
-  )
+  );
 };
 
 const PrescriptionsOverviewStackView = ({navigation}: {navigation: any}) => {
   return (
-    <PrescriptionsOverviewStack.Navigator screenOptions={{
+    <PrescriptionsOverviewStack.Navigator
+      screenOptions={{
         headerStyle: {
-          backgroundColor: '#32a852'
+          backgroundColor: '#32a852',
         },
         headerTintColor: '#fff',
         headerBackTitleStyle: {
-          fontWeight: 'bold'
-        }
+          fontWeight: 'bold',
+        },
       }}>
-      <PrescriptionsOverviewStack.Screen name="PrescriptionsOverview" component={PrescriptionsOverview} options={{
-        title:'PrescriptionsOverview',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size = {25} 
-          backgroundColor="#32a852" onPress={() => {navigation.openDrawer()}} ></Icon.Button>
-        )
-      }} />
+      <PrescriptionsOverviewStack.Screen
+        name="PrescriptionsOverview"
+        component={PrescriptionsOverview}
+        options={{
+          title: 'PrescriptionsOverview',
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
     </PrescriptionsOverviewStack.Navigator>
-  )
+  );
 };
 
 const AppointmentsStackView = ({navigation}: {navigation: any}) => {
   return (
-    <AppointmentsStack.Navigator screenOptions={{
+    <AppointmentsStack.Navigator
+      screenOptions={{
         headerStyle: {
-          backgroundColor: '#32a852'
+          backgroundColor: '#32a852',
         },
         headerTintColor: '#fff',
         headerBackTitleStyle: {
-          fontWeight: 'bold'
-        }
+          fontWeight: 'bold',
+        },
       }}>
-      <AppointmentsStack.Screen name="Appointments" component={Appointments} options={{
-        title:'Appointments',
-        headerLeft: () => (
-          <Icon.Button name="ios-menu" size = {25} 
-          backgroundColor="#32a852" onPress={() => {navigation.openDrawer()}} ></Icon.Button>
-        )
-      }} />
+      <AppointmentsStack.Screen
+        name="Appointments"
+        component={Appointments}
+        options={{
+          title: 'Appointments',
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
     </AppointmentsStack.Navigator>
-  )
+  );
 };
 
 const Tab = createBottomTabNavigator();
@@ -115,16 +159,15 @@ const TabScreen = () => {
       tabBarOptions={{
         activeTintColor: '#32a852',
         inactiveTintColor: '#d3d3d3',
-        activeBackgroundColor:'#fff',
-        inactiveBackgroundColor:'#fff',
-      }}
-    >
+        activeBackgroundColor: '#fff',
+        inactiveBackgroundColor: '#fff',
+      }}>
       <Tab.Screen
         name="Home"
         component={HomeStackView}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
@@ -134,7 +177,7 @@ const TabScreen = () => {
         component={FindDoctorStackView}
         options={{
           tabBarLabel: 'Doctors',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <Fontisto name="doctor" color={color} size={size} />
           ),
         }}
@@ -144,8 +187,12 @@ const TabScreen = () => {
         component={PrescriptionsOverviewStackView}
         options={{
           tabBarLabel: 'Prescriptions',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="prescription-bottle" color={color} size={size} />
+          tabBarIcon: ({color, size}) => (
+            <FontAwesome5
+              name="prescription-bottle"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -154,13 +201,13 @@ const TabScreen = () => {
         component={AppointmentsStackView}
         options={{
           tabBarLabel: 'Appointments',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <MaterialIcons name="event" color={color} size={size} />
           ),
         }}
       />
     </Tab.Navigator>
   );
-}
+};
 
 export default TabScreen;

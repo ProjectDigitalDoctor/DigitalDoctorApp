@@ -1,14 +1,5 @@
 import React, {Component, createRef} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  PermissionsAndroid,
-  ToastAndroid,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, PermissionsAndroid, ToastAndroid, TouchableOpacity} from 'react-native';
 import {
   RoomErrorEventArgs,
   RoomErrorEventCb,
@@ -23,6 +14,7 @@ import AppointmentRepository from '../../api/appointmentRepository';
 import apiClient from '../../api/anonymousClient';
 import AppointmentRoom from '../../api/models/appointmentRoom';
 import {ActivityIndicator} from 'react-native-paper';
+import Orientation from 'react-native-orientation';
 
 async function requestPermission(): Promise<boolean> {
   const granted = await PermissionsAndroid.requestMultiple([
@@ -83,6 +75,7 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
         ToastAndroid.show('Permissions required for appointment!', ToastAndroid.LONG);
         this.props.navigation.goBack();
       }
+      Orientation.lockToLandscape();
     });
 
     let repo = new AppointmentRepository(apiClient);
@@ -94,6 +87,11 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
         ToastAndroid.show('Failed to join appointment!', ToastAndroid.LONG);
         this.props.navigation.goBack();
       });
+  }
+
+  componentWillUnmount() {
+    Orientation.lockToPortrait();
+    Orientation.unlockAllOrientations();
   }
 
   _connect = (appointmentRoom: AppointmentRoom) => {

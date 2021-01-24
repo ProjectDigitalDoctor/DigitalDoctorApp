@@ -19,6 +19,10 @@ import {
   TwilioVideoLocalView,
   TwilioVideoParticipantView,
 } from 'react-native-twilio-video-webrtc';
+import AppointmentRepository from '../../api/appointmentRepository';
+import apiClient from '../../api/anonymousClient';
+import AppointmentRoom from '../../api/models/appointmentRoom';
+import {ActivityIndicator} from 'react-native-paper';
 
 async function requestPermission(): Promise<boolean> {
   const granted = await PermissionsAndroid.requestMultiple([
@@ -48,8 +52,6 @@ type InDoctorAppointmentState = {
   isAudioEnabled: boolean;
   status: string;
   videoTracks: Map<string, VideoTrackData>;
-  token: string;
-  roomName: string;
 };
 
 type InDoctorAppointmentProps = {
@@ -57,7 +59,7 @@ type InDoctorAppointmentProps = {
 };
 
 class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAppointmentState> {
-  twilioRef = createRef<TwilioVideo>();
+  twilioRef: React.RefObject<TwilioVideo>;
 
   constructor(props: InDoctorAppointmentProps) {
     super(props);
@@ -67,9 +69,8 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
       isAudioEnabled: true,
       status: 'disconnected',
       videoTracks: new Map<string, VideoTrackData>(),
-      token: '',
-      roomName: '',
     };
+    this.twilioRef = createRef<TwilioVideo>();
   }
 
   componentDidMount() {
@@ -83,12 +84,22 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
         this.props.navigation.goBack();
       }
     });
+
+    let repo = new AppointmentRepository(apiClient);
+    repo
+      .joinAppointment(1)
+      .then(this._connect)
+      .catch((error) => {
+        console.error(`failed to join room: ${error}`);
+        ToastAndroid.show('Failed to join appointment!', ToastAndroid.LONG);
+        this.props.navigation.goBack();
+      });
   }
 
-  _onConnectButtonPress = () => {
+  _connect = (appointmentRoom: AppointmentRoom) => {
     this.twilioRef.current.connect({
-      accessToken: this.state.token,
-      roomName: this.state.roomName,
+      accessToken: appointmentRoom.accessKey,
+      roomName: appointmentRoom.roomName,
     });
     this.setState({status: 'connecting'});
   };
@@ -149,24 +160,10 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
     return (
       <View style={styles.container}>
         {this.state.status === 'disconnected' && (
-          <View>
-            <Text style={styles.welcome}>React Native Twilio Video</Text>
-            <TextInput
-              style={styles.input}
-              autoCapitalize="none"
-              value={this.state.token}
-              onChangeText={(text) => this.setState({token: text})}
-            />
-            <TextInput
-              style={styles.input}
-              autoCapitalize="none"
-              value={this.state.roomName}
-              onChangeText={(text) => this.setState({roomName: text})}
-            />
-            <Button title="Connect" onPress={this._onConnectButtonPress} />
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator />
           </View>
         )}
-
         {(this.state.status === 'connected' || this.state.status === 'connecting') && (
           <View style={styles.callContainer}>
             {this.state.status === 'connected' && (
@@ -217,6 +214,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   callContainer: {
     flex: 1,
     position: 'absolute',
@@ -224,11 +225,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-  },
-  welcome: {
-    fontSize: 30,
-    textAlign: 'center',
-    paddingTop: 40,
   },
   input: {
     height: 50,
@@ -238,9 +234,6 @@ const styles = StyleSheet.create({
     marginTop: 50,
     textAlign: 'center',
     backgroundColor: 'white',
-  },
-  button: {
-    marginTop: 100,
   },
   localVideo: {
     flex: 1,

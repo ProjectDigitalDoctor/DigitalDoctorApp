@@ -6,6 +6,7 @@ import {
   RoomEventCb,
   TrackEventCb,
   TrackEventCbArgs,
+  TrackIdentifier,
   TwilioVideo,
   TwilioVideoLocalView,
   TwilioVideoParticipantView,
@@ -14,7 +15,6 @@ import AppointmentRepository from '../../api/appointmentRepository';
 import apiClient from '../../api/anonymousClient';
 import AppointmentRoom from '../../api/models/appointmentRoom';
 import {ActivityIndicator} from 'react-native-paper';
-import Orientation from 'react-native-orientation';
 
 async function requestPermission(): Promise<boolean> {
   const granted = await PermissionsAndroid.requestMultiple([
@@ -33,17 +33,13 @@ async function requestPermission(): Promise<boolean> {
   }
 }
 
-type VideoTrackData = {
-  participantSid: string;
-  videoTrackSid: string;
-};
-
 type InDoctorAppointmentState = {
   hasPermissions: boolean;
   isVideoEnabled: boolean;
   isAudioEnabled: boolean;
   status: string;
-  videoTracks: Map<string, VideoTrackData>;
+  videoTracks: Map<string, TrackIdentifier>;
+  lastJoinedTrackSid?: string;
 };
 
 type InDoctorAppointmentProps = {
@@ -60,7 +56,7 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
       isVideoEnabled: true,
       isAudioEnabled: true,
       status: 'disconnected',
-      videoTracks: new Map<string, VideoTrackData>(),
+      videoTracks: new Map<string, TrackIdentifier>(),
     };
     this.twilioRef = createRef<TwilioVideo>();
   }
@@ -75,7 +71,6 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
         ToastAndroid.show('Permissions required for appointment!', ToastAndroid.LONG);
         this.props.navigation.goBack();
       }
-      Orientation.lockToLandscape();
     });
 
     let repo = new AppointmentRepository(apiClient);
@@ -89,10 +84,7 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
       });
   }
 
-  componentWillUnmount() {
-    Orientation.lockToPortrait();
-    Orientation.unlockAllOrientations();
-  }
+  componentWillUnmount() {}
 
   _connect = (appointmentRoom: AppointmentRoom) => {
     this.twilioRef.current.connect({
@@ -125,7 +117,7 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
   _onRoomDidDisconnect: RoomErrorEventCb = ({error}: RoomErrorEventArgs) => {
     console.log('[Disconnect] ERROR: ', error);
 
-    this.setState({status: 'disconnected'});
+    this.props.navigation.goBack();
   };
 
   _onRoomDidFailToConnect: RoomErrorEventCb = ({error}: RoomErrorEventArgs) => {
@@ -138,10 +130,11 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
     console.log('onParticipantAddedVideoTrack: ', participant, track);
 
     this.setState({
-      videoTracks: new Map<string, VideoTrackData>([
+      videoTracks: new Map<string, TrackIdentifier>([
         ...this.state.videoTracks,
         [track.trackSid, {participantSid: participant.sid, videoTrackSid: track.trackSid}],
       ]),
+      lastJoinedTrackSid: track.trackSid,
     });
   };
 
@@ -150,8 +143,10 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
 
     const videoTracksLocal = this.state.videoTracks;
     videoTracksLocal.delete(track.trackSid);
+    const lastJoinedTrackSid =
+      this.state.lastJoinedTrackSid === track.trackSid ? undefined : this.state.lastJoinedTrackSid;
 
-    this.setState({videoTracks: videoTracksLocal});
+    this.setState({videoTracks: videoTracksLocal, lastJoinedTrackSid});
   };
 
   render() {
@@ -164,18 +159,14 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
         )}
         {(this.state.status === 'connected' || this.state.status === 'connecting') && (
           <View style={styles.callContainer}>
-            {this.state.status === 'connected' && (
-              <View style={styles.remoteGrid}>
-                {Array.from(this.state.videoTracks, ([trackSid, trackIdentifier]) => {
-                  return (
-                    <TwilioVideoParticipantView
-                      style={styles.remoteVideo}
-                      key={trackSid}
-                      trackIdentifier={trackIdentifier}
-                    />
-                  );
-                })}
-              </View>
+            {this.state.status === 'connected' && this.state.lastJoinedTrackSid !== undefined ? (
+              <TwilioVideoParticipantView
+                style={styles.remoteVideo}
+                key={this.state.lastJoinedTrackSid}
+                trackIdentifier={this.state.videoTracks.get(this.state.lastJoinedTrackSid)!}
+              />
+            ) : (
+              <ActivityIndicator style={styles.remoteVideo} />
             )}
             <View style={styles.optionsContainer}>
               <TouchableOpacity onPress={this._onEndButtonPress} style={styles.optionButton}>
@@ -187,8 +178,8 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
               <TouchableOpacity onPress={this._onFlipButtonPress} style={styles.optionButton}>
                 <Text style={{fontSize: 12}}>Flip</Text>
               </TouchableOpacity>
-              <TwilioVideoLocalView enabled={true} style={styles.localVideo} />
             </View>
+            <TwilioVideoLocalView enabled={true} style={styles.localVideo} />
           </View>
         )}
 
@@ -217,51 +208,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   callContainer: {
-    flex: 1,
     position: 'absolute',
     bottom: 0,
     top: 0,
     left: 0,
     right: 0,
-  },
-  input: {
-    height: 50,
-    borderWidth: 1,
-    marginRight: 70,
-    marginLeft: 70,
-    marginTop: 50,
-    textAlign: 'center',
-    backgroundColor: 'white',
+    height: '100%',
+    width: '100%',
   },
   localVideo: {
-    flex: 1,
     width: 150,
     height: 250,
     position: 'absolute',
     right: 10,
     bottom: 10,
   },
-  remoteGrid: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
   remoteVideo: {
-    marginTop: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    width: 100,
-    height: 120,
+    width: '100%',
+    height: '100%',
   },
   optionsContainer: {
     position: 'absolute',
-    left: 0,
-    bottom: 0,
-    right: 0,
-    height: 100,
-    backgroundColor: 'blue',
+    left: 10,
+    bottom: 10,
+    right: 170,
+    height: 80,
+    backgroundColor: 'grey',
     flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
+    borderRadius: 20,
   },
   optionButton: {
     width: 60,
@@ -269,7 +245,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 100 / 2,
-    backgroundColor: 'grey',
+    backgroundColor: 'darkgrey',
     justifyContent: 'center',
     alignItems: 'center',
   },

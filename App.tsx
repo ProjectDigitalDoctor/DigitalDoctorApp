@@ -25,10 +25,7 @@ const App = () => {
       <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name="TabScreen" component={TabScreen} />
         <Drawer.Screen name="Settings" component={Settings} />
-        <Drawer.Screen
-          name="InDoctorAppointment"
-          component={InDoctorAppointment}
-        />
+        <Drawer.Screen name="InDoctorAppointment" component={InDoctorAppointment} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

@@ -7,7 +7,7 @@ const Appointments = ({navigation}: {navigation: any}) => {
       <Text>Appointments</Text>
       <Button
         title="Enter appointment"
-        onPress={() => navigation.navigate('InDoctorAppointment')}
+        onPress={() => navigation.navigate('InDoctorAppointment', {appointmentID: 1})}
       />
     </View>
   );

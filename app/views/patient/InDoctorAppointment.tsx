@@ -44,6 +44,7 @@ type InDoctorAppointmentState = {
 
 type InDoctorAppointmentProps = {
   navigation: any;
+  route: any;
 };
 
 class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAppointmentState> {
@@ -75,7 +76,7 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
 
     let repo = new AppointmentRepository(apiClient);
     repo
-      .joinAppointment(1)
+      .joinAppointment(this.props.route.params.appointmentID)
       .then(this._connect)
       .catch((error) => {
         console.error(`failed to join room: ${error}`);

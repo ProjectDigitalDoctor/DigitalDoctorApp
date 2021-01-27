@@ -15,7 +15,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import TabScreen from './app/views/patient/TabScreen';
 import DrawerContent from './app/views/patient/DrawerContent';
 import Settings from './app/views/patient/Settings';
-import InDoctorAppointment from './app/views/patient/InDoctorAppointment';
+import AppointmentVideoChatScreen from './app/views/patient/AppointmentVideoChatScreen';
+import AppointmentScreen from './app/views/patient/AppointmentScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,7 +26,8 @@ const App = () => {
       <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name="TabScreen" component={TabScreen} />
         <Drawer.Screen name="Settings" component={Settings} />
-        <Drawer.Screen name="InDoctorAppointment" component={InDoctorAppointment} />
+        <Drawer.Screen name="AppointmentVideoChatScreen" component={AppointmentVideoChatScreen} />
+        <Drawer.Screen name="AppointmentScreen" component={AppointmentScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

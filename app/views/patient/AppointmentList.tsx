@@ -5,17 +5,17 @@ import AppointmentRepository from '../../api/appointmentRepository';
 import AppointmentModel from '../../api/models/appointment';
 import apiClient from '../../api/anonymousClient';
 
-type AppointmentsProps = {
+type AppointmentListProps = {
   navigation: any;
 };
 
-type AppointmentsState = {
+type AppointmentListState = {
   appointments: AppointmentModel[];
   isFetching: boolean;
 };
 
-class Appointments extends Component<AppointmentsProps, AppointmentsState> {
-  constructor(props: AppointmentsProps) {
+class AppointmentList extends Component<AppointmentListProps, AppointmentListState> {
+  constructor(props: AppointmentListProps) {
     super(props);
     this.state = {
       appointments: [],
@@ -40,7 +40,7 @@ class Appointments extends Component<AppointmentsProps, AppointmentsState> {
   }
 
   _onAppointmentPress = (appointment: AppointmentModel) => {
-    this.props.navigation.navigate('InDoctorAppointment', {appointmentID: appointment.id});
+    this.props.navigation.navigate('AppointmentScreen', {appointment: appointment});
   };
 
   render() {
@@ -71,7 +71,7 @@ class Appointments extends Component<AppointmentsProps, AppointmentsState> {
   }
 }
 
-export default Appointments;
+export default AppointmentList;
 
 const styles = StyleSheet.create({
   container: {

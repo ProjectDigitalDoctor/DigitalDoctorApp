@@ -1,4 +1,4 @@
-import InDoctorAppointment from '../../views/patient/InDoctorAppointment';
+import AppointmentVideoChatScreen from '../../views/patient/AppointmentVideoChatScreen';
 import DoctorModel from './doctor';
 
 export default interface AppointmentModel {
@@ -8,4 +8,4 @@ export default interface AppointmentModel {
   duration: string;
   reason: string;
   videoRoomName?: string;
-};
+}

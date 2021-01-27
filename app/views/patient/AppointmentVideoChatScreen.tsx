@@ -33,7 +33,7 @@ async function requestPermission(): Promise<boolean> {
   }
 }
 
-type InDoctorAppointmentState = {
+type AppointmentVideoChatScreenState = {
   hasPermissions: boolean;
   isVideoEnabled: boolean;
   isAudioEnabled: boolean;
@@ -42,15 +42,15 @@ type InDoctorAppointmentState = {
   lastJoinedTrackSid?: string;
 };
 
-type InDoctorAppointmentProps = {
+type AppointmentVideoChatScreenProps = {
   navigation: any;
   route: any;
 };
 
-class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAppointmentState> {
+class AppointmentVideoChatScreen extends Component<AppointmentVideoChatScreenProps, AppointmentVideoChatScreenState> {
   twilioRef: React.RefObject<TwilioVideo>;
 
-  constructor(props: InDoctorAppointmentProps) {
+  constructor(props: AppointmentVideoChatScreenProps) {
     super(props);
     this.state = {
       hasPermissions: false,
@@ -197,7 +197,7 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
   }
 }
 
-export default InDoctorAppointment;
+export default AppointmentVideoChatScreen;
 
 const styles = StyleSheet.create({
   container: {

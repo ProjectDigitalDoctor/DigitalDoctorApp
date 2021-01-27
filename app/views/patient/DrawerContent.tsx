@@ -9,18 +9,14 @@ function DrawerContent(props: any) {
     <View>
       <Drawer.Section>
         <DrawerItem
-          icon={({color, size}) => (
-            <Icon name="account-settings" color={color} size={size} />
-          )}
+          icon={({color, size}) => <Icon name="account-settings" color={color} size={size} />}
           label="Settings"
           onPress={() => {
             props.navigation.navigate('Settings');
           }}
         />
         <DrawerItem
-          icon={({color, size}) => (
-            <Icon name="exit-to-app" color={color} size={size} />
-          )}
+          icon={({color, size}) => <Icon name="exit-to-app" color={color} size={size} />}
           label="Sign out"
           onPress={() => {}}
         />

@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from './Home';
 import FindDoctor from './FindDoctor';
 import PrescriptionsOverview from './PrescriptionsOverview';
-import Appointments from './Appointments';
+import AppointmentList from './AppointmentList';
 
 const HomeStack = createStackNavigator();
 const FindDoctorStack = createStackNavigator();
@@ -131,7 +131,7 @@ const AppointmentsStackView = ({navigation}: {navigation: any}) => {
       }}>
       <AppointmentsStack.Screen
         name="Appointments"
-        component={Appointments}
+        component={AppointmentList}
         options={{
           title: 'Appointments',
           headerLeft: () => (
@@ -167,9 +167,7 @@ const TabScreen = () => {
         component={HomeStackView}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
+          tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="home" color={color} size={size} />,
         }}
       />
       <Tab.Screen
@@ -177,9 +175,7 @@ const TabScreen = () => {
         component={FindDoctorStackView}
         options={{
           tabBarLabel: 'Doctors',
-          tabBarIcon: ({color, size}) => (
-            <Fontisto name="doctor" color={color} size={size} />
-          ),
+          tabBarIcon: ({color, size}) => <Fontisto name="doctor" color={color} size={size} />,
         }}
       />
       <Tab.Screen
@@ -187,13 +183,7 @@ const TabScreen = () => {
         component={PrescriptionsOverviewStackView}
         options={{
           tabBarLabel: 'Prescriptions',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome5
-              name="prescription-bottle"
-              color={color}
-              size={size}
-            />
-          ),
+          tabBarIcon: ({color, size}) => <FontAwesome5 name="prescription-bottle" color={color} size={size} />,
         }}
       />
       <Tab.Screen
@@ -201,9 +191,7 @@ const TabScreen = () => {
         component={AppointmentsStackView}
         options={{
           tabBarLabel: 'Appointments',
-          tabBarIcon: ({color, size}) => (
-            <MaterialIcons name="event" color={color} size={size} />
-          ),
+          tabBarIcon: ({color, size}) => <MaterialIcons name="event" color={color} size={size} />,
         }}
       />
     </Tab.Navigator>

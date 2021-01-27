@@ -1,6 +1,6 @@
 import {AxiosInstance} from 'axios';
-import Appointment from './models/appointment';
-import AppointmentRoom from './models/appointmentRoom';
+import AppointmentModel from './models/appointment';
+import AppointmentRoomModel from './models/appointmentRoom';
 
 export default class AppointmentRepository {
   client: AxiosInstance;
@@ -9,9 +9,9 @@ export default class AppointmentRepository {
     this.client = client;
   }
 
-  async getAppointment(id: number): Promise<Appointment> {
+  async getAppointment(id: number): Promise<AppointmentModel> {
     return this.client
-      .get<Appointment>(`appointment/${id}`)
+      .get<AppointmentModel>(`appointment/${id}`)
       .then(async (res) => {
         return res.data;
       })
@@ -21,9 +21,21 @@ export default class AppointmentRepository {
       });
   }
 
-  async joinAppointment(id: number): Promise<AppointmentRoom> {
+  async getAllAppointments(): Promise<AppointmentModel[]> {
     return this.client
-      .post<AppointmentRoom>(`appointment/${id}/join`)
+      .get<AppointmentModel[]>('appointment')
+      .then(async (res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        console.log(`failed getting all appointments: ${error}`);
+        throw error;
+      });
+  }
+
+  async joinAppointment(id: number): Promise<AppointmentRoomModel> {
+    return this.client
+      .post<AppointmentRoomModel>(`appointment/${id}/join`)
       .then(async (res) => {
         return res.data;
       })

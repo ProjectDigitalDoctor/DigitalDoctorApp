@@ -13,7 +13,7 @@ import {
 } from 'react-native-twilio-video-webrtc';
 import AppointmentRepository from '../../api/appointmentRepository';
 import apiClient from '../../api/anonymousClient';
-import AppointmentRoom from '../../api/models/appointmentRoom';
+import AppointmentRoomModel from '../../api/models/appointmentRoom';
 import {ActivityIndicator} from 'react-native-paper';
 
 async function requestPermission(): Promise<boolean> {
@@ -87,7 +87,7 @@ class InDoctorAppointment extends Component<InDoctorAppointmentProps, InDoctorAp
 
   componentWillUnmount() {}
 
-  _connect = (appointmentRoom: AppointmentRoom) => {
+  _connect = (appointmentRoom: AppointmentRoomModel) => {
     this.twilioRef.current.connect({
       accessToken: appointmentRoom.accessKey,
       roomName: appointmentRoom.roomName,

@@ -1,4 +1,4 @@
-export default interface AppointmentRoom {
+export default interface AppointmentRoomModel {
   roomName: string;
   accessKey: string;
-};
+}

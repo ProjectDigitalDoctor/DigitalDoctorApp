@@ -5,7 +5,7 @@ export default interface AppointmentModel {
   id: number;
   doctor: DoctorModel;
   timestamp: string;
-  duration: string;
+  duration: number;
   reason: string;
   videoRoomName?: string;
-}
+};

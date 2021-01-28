@@ -1252,6 +1252,11 @@
   resolved "https://registry.npmjs.org/@types/hammerjs/-/hammerjs-2.0.36.tgz"
   integrity sha512-7TUK/k2/QGpEAv/BCwSHlYu3NXZhQ9ZwBYpzr9tjlPIL2C5BeGhH3DmVavRx3ZNyELX5TLC91JTz/cen6AAtIQ==
 
+"@types/intl@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/intl/-/intl-1.2.0.tgz#1245511f13064402087979f498764611a3c758fc"
+  integrity sha512-BP+KwmOvD9AR5aoxnbyyPr3fAtpjEI/bVImHsotmpuC43+z0NAmjJ9cQbX7vPCq8XcvCeAVc8E3KSQPYNaPsUQ==
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.3"
   resolved "https://registry.npmjs.org/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.3.tgz"
@@ -1309,6 +1314,15 @@
   version "5.0.1"
   resolved "https://registry.npmjs.org/@types/react-native-orientation/-/react-native-orientation-5.0.1.tgz"
   integrity sha512-0Uvj73hXWXwxKISUSh8KDew9005D49NtbLJ/coldIMZNPhI+4obk2X6nzF3FBeIQ/2FbVUUZM6oMMIgQwPUJ2w==
+
+"@types/react-native-table-component@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-table-component/-/react-native-table-component-1.2.0.tgz#9328052cf95d5d710fc13b4b95459ab1ef82daf1"
+  integrity sha512-7uFDcUdYUGY9DH0WgbptklqsOX3xdVCbJJuom6tBmvcdKrCUirvezWkSY5NlMVdMxRqsDCZYOnN5gVm3KeiKwg==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+    csstype "^3.0.3"
 
 "@types/react-native-vector-icons@^6.4.6":
   version "6.4.6"
@@ -2358,6 +2372,11 @@ csstype@^3.0.2:
   version "3.0.5"
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.0.5.tgz"
   integrity sha512-uVDi8LpBUKQj6sdxNaTetL6FpeCqTjOvAQuQUa/qAqq8oOd4ivkbhgnqayl0dnPal8Tb/yB1tF+gOvCBiicaiQ==
+
+csstype@^3.0.3:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.6.tgz#865d0b5833d7d8d40f4e5b8a6d76aea3de4725ef"
+  integrity sha512-+ZAmfyWMT7TiIlzdqJgjMb7S4f1beorDbWbsocyK4RaiqA5RTX3K14bnBWmmA9QEM0gRdsjyyrEmcyga8Zsxmw==
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -3571,6 +3590,11 @@ internal-slot@^1.0.2:
     es-abstract "^1.17.0-next.1"
     has "^1.0.3"
     side-channel "^1.0.2"
+
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
+  integrity sha1-giRKIZDE5Bn4Nx9ao02qNCDiq94=
 
 invariant@^2.2.4:
   version "2.2.4"
@@ -5804,6 +5828,11 @@ react-native-screens@^2.16.1:
   version "2.16.1"
   resolved "https://registry.npmjs.org/react-native-screens/-/react-native-screens-2.16.1.tgz"
   integrity sha512-WZ7m0sBDVaHbBnlHxwQnUlI6KNfQKHq+Unfw+VBuAlnSXvT+aw6Bb/K2bUlHzBgvrPjwY3Spc7ZERFuTwRLLwg==
+
+react-native-table-component@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-table-component/-/react-native-table-component-1.2.1.tgz#5f1e0f159b1dff9df0d5601c4a5ab99d1aa99a25"
+  integrity sha512-sapwO0bONfQtpWg3GVMwP5D3lGEJlxPB3c7fb0soXBynvCa+SBktacVZ9OmYJnIbRJ3uW5pS4tzNc8GmE+UScw==
 
 "react-native-twilio-video-webrtc@https://github.com/blackuy/react-native-twilio-video-webrtc":
   version "2.0.0"

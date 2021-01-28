@@ -17,19 +17,29 @@ import DrawerContent from './app/views/patient/DrawerContent';
 import Settings from './app/views/patient/Settings';
 import AppointmentVideoChatScreen from './app/views/patient/AppointmentVideoChatScreen';
 import AppointmentScreen from './app/views/patient/AppointmentScreen';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const Drawer = createDrawerNavigator();
+const RootNav = createStackNavigator();
+const DrawerNav = createDrawerNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-        <Drawer.Screen name="TabScreen" component={TabScreen} />
-        <Drawer.Screen name="Settings" component={Settings} />
-        <Drawer.Screen name="AppointmentVideoChatScreen" component={AppointmentVideoChatScreen} />
-        <Drawer.Screen name="AppointmentScreen" component={AppointmentScreen} />
-      </Drawer.Navigator>
+      <RootNav.Navigator screenOptions={{headerShown: false}}>
+        <RootNav.Screen name="Drawer" component={Drawer} />
+        <RootNav.Screen name="AppointmentVideoChatScreen" component={AppointmentVideoChatScreen} />
+        <RootNav.Screen name="AppointmentScreen" component={AppointmentScreen} />
+      </RootNav.Navigator>
     </NavigationContainer>
+  );
+};
+
+const Drawer = () => {
+  return (
+    <DrawerNav.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+      <DrawerNav.Screen name="TabScreen" component={TabScreen} />
+      <DrawerNav.Screen name="Settings" component={Settings} />
+    </DrawerNav.Navigator>
   );
 };
 

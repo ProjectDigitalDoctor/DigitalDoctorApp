@@ -40,15 +40,24 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
   }
 
   _onAppointmentPress = (appointment: AppointmentModel) => {
-    this.props.navigation.navigate('AppointmentScreen', {appointment: appointment});
+    this.props.navigation.push('AppointmentScreen', {appointment: appointment});
   };
 
   render() {
+    const dateTimeFormat = new Intl.DateTimeFormat('en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false,
+    });
+
     const appointmentElement = ({item}: {item: AppointmentModel}) => (
       <TouchableOpacity onPress={() => this._onAppointmentPress(item)}>
         <View style={styles.item}>
           <Text style={styles.title}>{item.reason}</Text>
-          <Text style={styles.details}>{item.timestamp}</Text>
+          <Text style={styles.details}>{dateTimeFormat.format(new Date(item.timestamp))}</Text>
           <Text>
             with {item.doctor.firstName} {item.doctor.lastName} ({item.doctor.profession})
           </Text>

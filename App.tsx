@@ -18,6 +18,7 @@ import Settings from './app/views/patient/Settings';
 import AppointmentVideoChatScreen from './app/views/patient/AppointmentVideoChatScreen';
 import AppointmentScreen from './app/views/patient/AppointmentScreen';
 import {createStackNavigator} from '@react-navigation/stack';
+import PrescriptionScreen from './app/views/patient/PrescriptionScreen';
 
 const RootNav = createStackNavigator();
 const DrawerNav = createDrawerNavigator();
@@ -29,6 +30,7 @@ const App = () => {
         <RootNav.Screen name="Drawer" component={Drawer} />
         <RootNav.Screen name="AppointmentVideoChatScreen" component={AppointmentVideoChatScreen} />
         <RootNav.Screen name="AppointmentScreen" component={AppointmentScreen} />
+        <RootNav.Screen name="PrescriptionScreen" component={PrescriptionScreen} />
       </RootNav.Navigator>
     </NavigationContainer>
   );

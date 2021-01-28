@@ -58,8 +58,8 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
         <View style={styles.item}>
           <Text style={styles.title}>{item.reason}</Text>
           <Text style={styles.details}>{dateTimeFormat.format(new Date(item.timestamp))}</Text>
-          <Text>
-            with {item.doctor.firstName} {item.doctor.lastName} ({item.doctor.profession})
+          <Text style={styles.details}>
+            {item.doctor.firstName} {item.doctor.lastName} ({item.doctor.profession})
           </Text>
         </View>
       </TouchableOpacity>
@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   details: {
-    fontSize: 15,
+    fontSize: 14,
   },
 });

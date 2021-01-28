@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from './Home';
 import FindDoctor from './FindDoctor';
-import PrescriptionsOverview from './PrescriptionsOverview';
+import PrescriptionsList from './PrescriptionsList';
 import AppointmentList from './AppointmentList';
 
 const HomeStack = createStackNavigator();
@@ -84,7 +84,7 @@ const FindDoctorStackView = ({navigation}: {navigation: any}) => {
   );
 };
 
-const PrescriptionsOverviewStackView = ({navigation}: {navigation: any}) => {
+const PrescriptionsListStackView = ({navigation}: {navigation: any}) => {
   return (
     <PrescriptionsOverviewStack.Navigator
       screenOptions={{
@@ -97,10 +97,10 @@ const PrescriptionsOverviewStackView = ({navigation}: {navigation: any}) => {
         },
       }}>
       <PrescriptionsOverviewStack.Screen
-        name="PrescriptionsOverview"
-        component={PrescriptionsOverview}
+        name="Prescriptions"
+        component={PrescriptionsList}
         options={{
-          title: 'PrescriptionsOverview',
+          title: 'Prescriptions',
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -117,7 +117,7 @@ const PrescriptionsOverviewStackView = ({navigation}: {navigation: any}) => {
   );
 };
 
-const AppointmentsStackView = ({navigation}: {navigation: any}) => {
+const AppointmentListStackView = ({navigation}: {navigation: any}) => {
   return (
     <AppointmentsStack.Navigator
       screenOptions={{
@@ -179,16 +179,16 @@ const TabScreen = () => {
         }}
       />
       <Tab.Screen
-        name="PrescriptionsOverview"
-        component={PrescriptionsOverviewStackView}
+        name="PrescriptionsList"
+        component={PrescriptionsListStackView}
         options={{
           tabBarLabel: 'Prescriptions',
           tabBarIcon: ({color, size}) => <FontAwesome5 name="prescription-bottle" color={color} size={size} />,
         }}
       />
       <Tab.Screen
-        name="Appointments"
-        component={AppointmentsStackView}
+        name="AppointmentList"
+        component={AppointmentListStackView}
         options={{
           tabBarLabel: 'Appointments',
           tabBarIcon: ({color, size}) => <MaterialIcons name="event" color={color} size={size} />,

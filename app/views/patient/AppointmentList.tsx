@@ -15,23 +15,29 @@ type AppointmentListState = {
 };
 
 class AppointmentList extends Component<AppointmentListProps, AppointmentListState> {
+  repo: AppointmentRepository = new AppointmentRepository(apiClient);
+
   constructor(props: AppointmentListProps) {
     super(props);
     this.state = {
       appointments: [],
       isFetching: false,
     };
+    this.repo
+      .loadCachedAppointments()
+      .then((appointments) => this.setState({appointments}))
+      .catch((error) => console.error(`failed to load cached appointments: ${error}`));
   }
 
   loadAppointments = () => {
     this.setState({isFetching: true});
-    let repo = new AppointmentRepository(apiClient);
-    repo
+    this.repo
       .getAllAppointments()
       .then((appointments) => this.setState({appointments, isFetching: false}))
       .catch((error) => {
         console.error(`failed to load appointments: ${error}`);
         ToastAndroid.show('Failed to load appointments!', ToastAndroid.LONG);
+        this.setState({isFetching: false});
       });
   };
 

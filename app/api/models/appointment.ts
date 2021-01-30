@@ -1,4 +1,3 @@
-import AppointmentVideoChatScreen from '../../views/patient/AppointmentVideoChatScreen';
 import DoctorModel from './doctor';
 
 export default interface AppointmentModel {
@@ -8,4 +7,4 @@ export default interface AppointmentModel {
   duration: number;
   reason: string;
   videoRoomName?: string;
-};
+}

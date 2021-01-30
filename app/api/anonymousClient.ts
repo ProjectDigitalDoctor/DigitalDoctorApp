@@ -6,6 +6,7 @@ const client = axios.create({
   headers: {
     Accept: 'application/json',
   },
+  timeout: 200,
 });
 
 // Intercept all requests

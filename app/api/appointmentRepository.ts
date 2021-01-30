@@ -1,12 +1,39 @@
 import {AxiosInstance} from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppointmentModel from './models/appointment';
 import AppointmentRoomModel from './models/appointmentRoom';
 
+const AppointmentsCacheKey = 'APPOINTMENTS_CACHE';
+
 export default class AppointmentRepository {
   client: AxiosInstance;
+  appointmentsCache?: AppointmentModel[] = undefined;
 
   constructor(client: AxiosInstance) {
     this.client = client;
+  }
+
+  async _saveCache(appointments: AppointmentModel[]) {
+    this.appointmentsCache = appointments;
+    try {
+      const jsonValue = JSON.stringify(appointments);
+      await AsyncStorage.setItem(AppointmentsCacheKey, jsonValue);
+    } catch (e) {
+      console.error(`failed to cache appointments: ${e}`);
+    }
+  }
+
+  async loadCachedAppointments(): Promise<AppointmentModel[]> {
+    if (this.appointmentsCache !== undefined) {
+      return Promise.resolve(this.appointmentsCache);
+    }
+    try {
+      const jsonValue = await AsyncStorage.getItem(AppointmentsCacheKey);
+      return jsonValue != null ? JSON.parse(jsonValue) : [];
+    } catch (e) {
+      console.error(`failed to cache appointments: ${e}`);
+      return [];
+    }
   }
 
   async getAppointment(id: number): Promise<AppointmentModel> {
@@ -25,6 +52,7 @@ export default class AppointmentRepository {
     return this.client
       .get<AppointmentModel[]>('appointment')
       .then(async (res) => {
+        this._saveCache(res.data);
         return res.data;
       })
       .catch((error) => {

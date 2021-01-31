@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, StyleSheet, View} from 'react-native';
-import {Appbar} from 'react-native-paper';
 import {Table, Rows} from 'react-native-table-component';
 import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
@@ -12,7 +11,7 @@ interface PrescriptionScreenState {
 
 interface PrescriptionScreenProps {
   navigation: any;
-  route: any; // this.props.route.params.appointmentID;
+  route: any;
 }
 
 class PrescriptionScreen extends Component<PrescriptionScreenProps, PrescriptionScreenState> {
@@ -23,7 +22,9 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.navigation.setOptions({title: this.state.prescription.drug.name});
+  }
 
   _goBack = () => this.props.navigation.goBack();
 
@@ -49,10 +50,6 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
 
     return (
       <View style={styles.container}>
-        <Appbar.Header style={styles.header}>
-          <Appbar.BackAction onPress={this._goBack} />
-          <Appbar.Content title={this.state.prescription.drug.name} />
-        </Appbar.Header>
         <View style={styles.content}>
           <Table style={styles.table}>
             <Rows data={tableData} textStyle={styles.rowText} style={styles.row} />

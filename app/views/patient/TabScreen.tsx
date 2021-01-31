@@ -11,6 +11,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FindDoctor from './FindDoctor';
 import PrescriptionsList from './PrescriptionsList';
 import AppointmentList from './AppointmentList';
+import PrescriptionScreen from './PrescriptionScreen';
+import AppointmentScreen from './AppointmentScreen';
+import AppointmentVideoChatScreen from './AppointmentVideoChatScreen';
 
 
 const FindDoctorStack = createStackNavigator();
@@ -79,6 +82,22 @@ const PrescriptionsListStackView = ({navigation}: {navigation: any}) => {
           ),
         }}
       />
+      <PrescriptionsOverviewStack.Screen
+        name="PrescriptionScreen"
+        component={PrescriptionScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="arrow-back"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+        }}
+      />
     </PrescriptionsOverviewStack.Navigator>
   );
 };
@@ -112,6 +131,29 @@ const AppointmentListStackView = ({navigation}: {navigation: any}) => {
           ),
         }}
       />
+      <AppointmentsStack.Screen
+        name="AppointmentScreen"
+        component={AppointmentScreen}
+        options={{
+          headerLeft: () => (
+            <Icon.Button
+              name="arrow-back"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+        }}
+      />
+      <AppointmentsStack.Screen
+        name="AppointmentVideoChatScreen"
+        component={AppointmentVideoChatScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </AppointmentsStack.Navigator>
   );
 };
@@ -122,6 +164,7 @@ const TabScreen = () => {
   return (
     <Tab.Navigator
       initialRouteName="AppointmentList"
+      backBehavior="none"
       tabBarOptions={{
         activeTintColor: '#32a852',
         inactiveTintColor: '#d3d3d3',

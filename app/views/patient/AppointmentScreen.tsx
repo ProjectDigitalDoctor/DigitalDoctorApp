@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, StyleSheet, View} from 'react-native';
-import {Appbar} from 'react-native-paper';
 import {Table, Rows} from 'react-native-table-component';
 import AppointmentModel from '../../api/models/appointment';
 import 'intl';
@@ -23,7 +22,9 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.navigation.setOptions({title: this.state.appointment.reason});
+  }
 
   _goBack = () => this.props.navigation.goBack();
 
@@ -53,10 +54,6 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
 
     return (
       <View style={styles.container}>
-        <Appbar.Header style={styles.header}>
-          <Appbar.BackAction onPress={this._goBack} />
-          <Appbar.Content title={this.state.appointment.reason} />
-        </Appbar.Header>
         <View style={styles.content}>
           <Table style={styles.table}>
             <Rows data={tableData} textStyle={styles.rowText} style={styles.row} />

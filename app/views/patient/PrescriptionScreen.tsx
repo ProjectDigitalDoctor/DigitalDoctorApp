@@ -54,7 +54,7 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
           <Table style={styles.table}>
             <Rows data={tableData} textStyle={styles.rowText} style={styles.row} />
           </Table>
-          <Button title="Redeem now" onPress={() => {}} color="#3083DC" />
+          <Button title="Jetzt einlösen!" onPress={() => {}} color="#3083DC" />
         </View>
       </View>
     );

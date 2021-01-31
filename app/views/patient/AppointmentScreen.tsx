@@ -3,7 +3,7 @@ import {Button, StyleSheet, View} from 'react-native';
 import {Table, Rows} from 'react-native-table-component';
 import AppointmentModel from '../../api/models/appointment';
 import 'intl';
-import 'intl/locale-data/jsonp/en-GB';
+import 'intl/locale-data/jsonp/de-DE';
 
 interface AppointmentScreenState {
   appointment: AppointmentModel;
@@ -32,12 +32,12 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
     this.props.navigation.push('AppointmentVideoChatScreen', {appointmentID: this.state.appointment.id});
 
   render = () => {
-    const dateFormat = new Intl.DateTimeFormat('en-GB', {
+    const dateFormat = new Intl.DateTimeFormat('de-DE', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
-    const timeFormat = new Intl.DateTimeFormat('en-GB', {
+    const timeFormat = new Intl.DateTimeFormat('de-DE', {
       hour: 'numeric',
       minute: 'numeric',
       hour12: false,
@@ -45,11 +45,11 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
     const date = new Date(this.state.appointment.timestamp);
 
     const tableData = [
-      ['Doctor:', `${this.state.appointment.doctor.firstName} ${this.state.appointment.doctor.lastName}`],
-      ['Profession:', `${this.state.appointment.doctor.profession}`],
-      ['Date:', `${dateFormat.format(date)}`],
-      ['Time:', `${timeFormat.format(date)}`],
-      ['Duration:', `${this.state.appointment.duration} minutes`],
+      ['Arzt:', `${this.state.appointment.doctor.firstName} ${this.state.appointment.doctor.lastName}`],
+      ['Fachgebiet:', `${this.state.appointment.doctor.profession}`],
+      ['Datum:', `${dateFormat.format(date)}`],
+      ['Uhrzeit:', `${timeFormat.format(date)}`],
+      ['Dauer:', `${this.state.appointment.duration} Minuten`],
     ];
 
     return (
@@ -58,7 +58,7 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
           <Table style={styles.table}>
             <Rows data={tableData} textStyle={styles.rowText} style={styles.row} />
           </Table>
-          <Button title="Join Appointment!" onPress={this._joinAppointment} color="#3083DC" />
+          <Button title="Termin beitreten!" onPress={this._joinAppointment} color="#3083DC" />
         </View>
       </View>
     );

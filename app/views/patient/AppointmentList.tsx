@@ -36,7 +36,7 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
       .then((appointments) => this.setState({appointments, isFetching: false}))
       .catch((error) => {
         console.error(`failed to load appointments: ${error}`);
-        ToastAndroid.show('Failed to load appointments!', ToastAndroid.LONG);
+        ToastAndroid.show('Laden der Termine fehlgeschlagen!', ToastAndroid.LONG);
         this.setState({isFetching: false});
       });
   };

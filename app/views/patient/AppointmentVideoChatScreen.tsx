@@ -69,7 +69,7 @@ class AppointmentVideoChatScreen extends Component<AppointmentVideoChatScreenPro
           hasPermissions: true,
         });
       } else {
-        ToastAndroid.show('Permissions required for appointment!', ToastAndroid.LONG);
+        ToastAndroid.show('Sie haben keine Berechtigung für die Teilnahme am Meeting!', ToastAndroid.LONG);
         this.props.navigation.goBack();
       }
     });
@@ -80,7 +80,7 @@ class AppointmentVideoChatScreen extends Component<AppointmentVideoChatScreenPro
       .then(this._connect)
       .catch((error) => {
         console.error(`failed to join room: ${error}`);
-        ToastAndroid.show('Failed to join appointment!', ToastAndroid.LONG);
+        ToastAndroid.show('Beitreten fehlegeschlagen!', ToastAndroid.LONG);
         this.props.navigation.goBack();
       });
   }

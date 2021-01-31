@@ -3,7 +3,7 @@ import {Button, StyleSheet, View} from 'react-native';
 import {Appbar} from 'react-native-paper';
 import {Table, Rows} from 'react-native-table-component';
 import 'intl';
-import 'intl/locale-data/jsonp/en-GB';
+import 'intl/locale-data/jsonp/de-DE';
 import PrescriptionModel from '../../api/models/prescription';
 
 interface PrescriptionScreenState {
@@ -28,23 +28,23 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
   _goBack = () => this.props.navigation.goBack();
 
   render = () => {
-    const dateFormat = new Intl.DateTimeFormat('en-GB', {
+    const dateFormat = new Intl.DateTimeFormat('de-DE', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
 
     const tableData = [
-      ['Issued On:', `${dateFormat.format(new Date(this.state.prescription.dateOfIssue))}`],
-      ['Valid Until:', `${dateFormat.format(new Date(this.state.prescription.validUntil))}`],
-      ['Issued By:', `${this.state.prescription.doctor.firstName} ${this.state.prescription.doctor.lastName}`],
+      ['Ausgestellt am:', `${dateFormat.format(new Date(this.state.prescription.dateOfIssue))}`],
+      ['Gültig bis:', `${dateFormat.format(new Date(this.state.prescription.validUntil))}`],
+      ['Ausgestellt von:', `${this.state.prescription.doctor.firstName} ${this.state.prescription.doctor.lastName}`],
       ['PZN:', `${this.state.prescription.drug.pzn}`],
-      ['Manufacturer:', `${this.state.prescription.drug.manufacturer.name}`],
-      ['Side Effects:', `${this.state.prescription.drug.sideEffects}`],
-      ['Usage:', `${this.state.prescription.drug.usage}`],
-      ['Usage Description:', `${this.state.prescription.usageDescription}`],
+      ['Hersteller:', `${this.state.prescription.drug.manufacturer.name}`],
+      ['Nebenwirkungen:', `${this.state.prescription.drug.sideEffects}`],
+      ['Art der Einnahme:', `${this.state.prescription.drug.usage}`],
+      ['Einnahmehäufigkeit:', `${this.state.prescription.usageDescription}`],
       ['', ''],
-      ['Redeemend', 'No'],
+      ['Eingelöst', 'Nein'],
     ];
 
     return (

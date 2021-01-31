@@ -30,7 +30,7 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
       .then((prescriptions) => this.setState({prescriptions, isFetching: false}))
       .catch((error) => {
         console.error(`failed to load prescriptions: ${error}`);
-        ToastAndroid.show('Failed to load prescriptions!', ToastAndroid.LONG);
+        ToastAndroid.show('Laden der Rezepte fehlgeschlagen!', ToastAndroid.LONG);
       });
   };
 
@@ -43,7 +43,7 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
   };
 
   render() {
-    const dateFormat = new Intl.DateTimeFormat('en-GB', {
+    const dateFormat = new Intl.DateTimeFormat('de-DE', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -54,7 +54,7 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
         <View style={styles.item}>
           <Text style={styles.title}>{item.drug.name}</Text>
           <Text style={styles.details}>
-            Issued {dateFormat.format(new Date(item.dateOfIssue))} by {item.doctor.firstName} {item.doctor.lastName}
+            Ausgestellt am {dateFormat.format(new Date(item.dateOfIssue))} von {item.doctor.firstName} {item.doctor.lastName}
           </Text>
         </View>
       </TouchableOpacity>

@@ -50,7 +50,7 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
   };
 
   render() {
-    const dateTimeFormat = new Intl.DateTimeFormat('en-GB', {
+    const dateTimeFormat = new Intl.DateTimeFormat('de-DE', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',

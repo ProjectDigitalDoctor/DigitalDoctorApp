@@ -67,7 +67,7 @@ const FindDoctorStackView = ({navigation}: {navigation: any}) => {
         name="FindDoctor"
         component={FindDoctor}
         options={{
-          title: 'FindDoctor',
+          title: 'Arztsuche',
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -100,7 +100,7 @@ const PrescriptionsListStackView = ({navigation}: {navigation: any}) => {
         name="Prescriptions"
         component={PrescriptionsList}
         options={{
-          title: 'Prescriptions',
+          title: 'Rezepte',
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -133,7 +133,7 @@ const AppointmentListStackView = ({navigation}: {navigation: any}) => {
         name="Appointments"
         component={AppointmentList}
         options={{
-          title: 'Appointments',
+          title: 'Termine',
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -174,7 +174,7 @@ const TabScreen = () => {
         name="FindDoctor"
         component={FindDoctorStackView}
         options={{
-          tabBarLabel: 'Doctors',
+          tabBarLabel: 'Arztsuche',
           tabBarIcon: ({color, size}) => <Fontisto name="doctor" color={color} size={size} />,
         }}
       />
@@ -182,7 +182,7 @@ const TabScreen = () => {
         name="PrescriptionsList"
         component={PrescriptionsListStackView}
         options={{
-          tabBarLabel: 'Prescriptions',
+          tabBarLabel: 'Rezepte',
           tabBarIcon: ({color, size}) => <FontAwesome5 name="prescription-bottle" color={color} size={size} />,
         }}
       />
@@ -190,7 +190,7 @@ const TabScreen = () => {
         name="AppointmentList"
         component={AppointmentListStackView}
         options={{
-          tabBarLabel: 'Appointments',
+          tabBarLabel: 'Termine',
           tabBarIcon: ({color, size}) => <MaterialIcons name="event" color={color} size={size} />,
         }}
       />

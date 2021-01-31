@@ -8,48 +8,14 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Home from './Home';
 import FindDoctor from './FindDoctor';
 import PrescriptionsList from './PrescriptionsList';
 import AppointmentList from './AppointmentList';
 
-const HomeStack = createStackNavigator();
+
 const FindDoctorStack = createStackNavigator();
 const PrescriptionsOverviewStack = createStackNavigator();
 const AppointmentsStack = createStackNavigator();
-
-const HomeStackView = ({navigation}: {navigation: any}) => {
-  return (
-    <HomeStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#32a852',
-        },
-        headerTintColor: '#fff',
-        headerBackTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}>
-      <HomeStack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          title: 'Home',
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              size={25}
-              backgroundColor="#32a852"
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}
-      />
-    </HomeStack.Navigator>
-  );
-};
 
 const FindDoctorStackView = ({navigation}: {navigation: any}) => {
   return (
@@ -71,7 +37,7 @@ const FindDoctorStackView = ({navigation}: {navigation: any}) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
-              size={25}
+              size={33}
               backgroundColor="#32a852"
               onPress={() => {
                 navigation.openDrawer();
@@ -104,7 +70,7 @@ const PrescriptionsListStackView = ({navigation}: {navigation: any}) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
-              size={25}
+              size={33}
               backgroundColor="#32a852"
               onPress={() => {
                 navigation.openDrawer();
@@ -137,7 +103,7 @@ const AppointmentListStackView = ({navigation}: {navigation: any}) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
-              size={25}
+              size={33}
               backgroundColor="#32a852"
               onPress={() => {
                 navigation.openDrawer();
@@ -155,7 +121,7 @@ const Tab = createBottomTabNavigator();
 const TabScreen = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="AppointmentList"
       tabBarOptions={{
         activeTintColor: '#32a852',
         inactiveTintColor: '#d3d3d3',
@@ -163,11 +129,11 @@ const TabScreen = () => {
         inactiveBackgroundColor: '#fff',
       }}>
       <Tab.Screen
-        name="Home"
-        component={HomeStackView}
+        name="AppointmentList"
+        component={AppointmentListStackView}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="home" color={color} size={size} />,
+          tabBarLabel: 'Termine',
+          tabBarIcon: ({color, size}) => <MaterialIcons name="event" color={color} size={size} />,
         }}
       />
       <Tab.Screen
@@ -184,14 +150,6 @@ const TabScreen = () => {
         options={{
           tabBarLabel: 'Rezepte',
           tabBarIcon: ({color, size}) => <FontAwesome5 name="prescription-bottle" color={color} size={size} />,
-        }}
-      />
-      <Tab.Screen
-        name="AppointmentList"
-        component={AppointmentListStackView}
-        options={{
-          tabBarLabel: 'Termine',
-          tabBarIcon: ({color, size}) => <MaterialIcons name="event" color={color} size={size} />,
         }}
       />
     </Tab.Navigator>

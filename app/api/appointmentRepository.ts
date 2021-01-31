@@ -31,7 +31,7 @@ export default class AppointmentRepository {
       const jsonValue = await AsyncStorage.getItem(AppointmentsCacheKey);
       return jsonValue != null ? JSON.parse(jsonValue) : [];
     } catch (e) {
-      console.error(`failed to cache appointments: ${e}`);
+      console.error(`failed to retreive cached appointments: ${e}`);
       return [];
     }
   }

@@ -12,6 +12,8 @@ target 'DigitalDoctor' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'DigitalDoctorTests' do
     inherit! :complete
     # Pods for testing

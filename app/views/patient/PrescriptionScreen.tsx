@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import {Button, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
+import {Alert, Button, Modal, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import {Table, Rows, TableWrapper, Cell} from 'react-native-table-component';
 import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
 import PrescriptionModel from '../../api/models/prescription';
 import PrescriptionRepository from '../../api/prescriptionRepository';
 import apiClient from '../../api/anonymousClient';
+import QRCode from 'react-native-qrcode-generator';
+import OfferModel from '../../api/models/offer';
 
 interface PrescriptionScreenState {
   prescription: PrescriptionModel;
+  qrCodeValue?: string;
 }
 
 interface PrescriptionScreenProps {
@@ -32,7 +35,23 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
 
   _goBack = () => this.props.navigation.goBack();
 
-  _orderOffer = (offerID: number) => {
+  _orderOffer = (offer: OfferModel) => {
+    Alert.alert(
+      'Bestellung Bestätigen',
+      `Wollen Sie die Bestellung für "${this.state.prescription.drug.name}" bei "${offer.shop.name}" für ${offer.price}€ aufgeben?`,
+      [
+        {
+          text: 'Abbrechen',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {text: 'Bestellen', onPress: () => this._orderOfferImpl(offer.id)},
+      ],
+      {cancelable: false},
+    );
+  };
+
+  _orderOfferImpl = (offerID: number) => {
     this.repo
       .orderOffer(this.state.prescription.id, offerID)
       .then(() => {
@@ -45,6 +64,12 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
         console.error('Failed to order offer: ' + error);
         ToastAndroid.show('Fehler beim Bestellen des Medikaments!', ToastAndroid.LONG);
       });
+  };
+
+  _localRedeem = () => {
+    this.setState({
+      qrCodeValue: `${this.repo.client.defaults.baseURL}prescription/${this.state.prescription.id}/redeem`,
+    });
   };
 
   render = () => {
@@ -67,7 +92,7 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
 
     const offerTable = [];
     for (const offer of this.state.prescription.drug.offers) {
-      offerTable.push([offer.shop.name, `${offer.price}€`, offer.id]);
+      offerTable.push([offer.shop.name, `${offer.price}€`, offer]);
     }
 
     const orderOfferElement = (data: any) => (
@@ -80,6 +105,12 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
 
     return (
       <View style={styles.content}>
+        <Modal visible={this.state.qrCodeValue !== undefined} transparent={false} animationType={'slide'}>
+          <View style={styles.modal}>
+            <QRCode value={this.state.qrCodeValue!} size={200} bgColor="#000000" fgColor="lightgrey" />
+            <Button onPress={() => this.setState({qrCodeValue: undefined})} title="Schließen" color="#3083DC" />
+          </View>
+        </Modal>
         <Table style={styles.attributeTable}>
           <Rows data={attributeTable} textStyle={styles.rowText} style={styles.row} />
         </Table>
@@ -101,7 +132,7 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
                 </TableWrapper>
               ))}
             </Table>
-            <Button title="Vor Ort einlösen" onPress={() => {}} color="#3083DC" />
+            <Button title="Vor Ort einlösen" onPress={this._localRedeem} color="#3083DC" />
           </>
         )}
       </View>
@@ -157,5 +188,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginBottom: 10,
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 150,
+    backgroundColor: 'lightgrey',
   },
 });

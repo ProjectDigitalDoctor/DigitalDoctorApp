@@ -76,6 +76,7 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
             Ausgestellt am {dateFormat.format(new Date(item.dateOfIssue))} von {item.doctor.firstName}{' '}
             {item.doctor.lastName}
           </Text>
+          <Text style={styles.details}>Gültig bis {dateFormat.format(new Date(item.validUntil))}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -86,11 +87,11 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
     today.setMinutes(59);
     if (!this.state.showOutdated) {
       filteredPrescriptions = this.state.prescriptions.filter(
-        (prescription) => new Date(prescription.validUntil) > today,
+        (prescription) => new Date(prescription.validUntil) > today && !prescription.redeemed,
       );
     } else {
       filteredPrescriptions = this.state.prescriptions.filter(
-        (prescription) => new Date(prescription.validUntil) < today,
+        (prescription) => new Date(prescription.validUntil) < today || prescription.redeemed,
       );
     }
 
@@ -137,6 +138,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   details: {
-    fontSize: 13,
+    fontSize: 12,
   },
 });

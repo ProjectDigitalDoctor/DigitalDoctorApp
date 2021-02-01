@@ -1,4 +1,5 @@
 import ManufacturerModel from './manufacturer';
+import OfferModel from './offer';
 
 export default interface DrugModel {
   pzn: string;
@@ -6,4 +7,5 @@ export default interface DrugModel {
   manufacturer: ManufacturerModel;
   sideEffects: string;
   usage: string;
-}
+  offers: OfferModel[];
+};

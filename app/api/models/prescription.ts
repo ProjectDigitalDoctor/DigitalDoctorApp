@@ -8,4 +8,5 @@ export default interface PrescriptionModel {
   usageDescription: string;
   dateOfIssue: string;
   validUntil: string;
-}
+  redeemed: boolean;
+};

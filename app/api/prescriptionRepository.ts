@@ -59,4 +59,16 @@ export default class PrescriptionRepository {
         throw error;
       });
   }
+
+  async orderOffer(prescriptionID: number, offerID: number): Promise<{}> {
+    return this.client
+      .post(`prescription/${prescriptionID}/offer/${offerID}/order`)
+      .then(async () => {
+        return {};
+      })
+      .catch((error) => {
+        console.log(`failed to order offer: ${error}`);
+        throw error;
+      });
+  }
 }

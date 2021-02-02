@@ -4,6 +4,29 @@ import {FlatList, TouchableOpacity} from 'react-native';
 import AppointmentRepository from '../../api/appointmentRepository';
 import AppointmentModel from '../../api/models/appointment';
 import apiClient from '../../api/anonymousClient';
+import {Calendar, DateCallbackHandler, DateObject, LocaleConfig} from 'react-native-calendars';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+LocaleConfig.locales.de = {
+  monthNames: [
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember',
+  ],
+  monthNamesShort: ['Jan.', 'Feb.', 'März', 'April', 'Mai', 'Juni', 'Juli.', 'Aug', 'Sept.', 'Okt.', 'Nov.', 'Dez.'],
+  dayNames: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+  dayNamesShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+};
+LocaleConfig.defaultLocale = 'de';
 
 type AppointmentListProps = {
   navigation: any;
@@ -12,6 +35,7 @@ type AppointmentListProps = {
 type AppointmentListState = {
   appointments: AppointmentModel[];
   isFetching: boolean;
+  selectedDay?: string;
 };
 
 class AppointmentList extends Component<AppointmentListProps, AppointmentListState> {
@@ -42,11 +66,20 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
   };
 
   componentDidMount() {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <MaterialCommunityIcons.Button name="reload" backgroundColor="#32a852" onPress={this.loadAppointments} />
+      ),
+    });
     this.loadAppointments();
   }
 
   _onAppointmentPress = (appointment: AppointmentModel) => {
     this.props.navigation.push('AppointmentScreen', {appointment: appointment});
+  };
+
+  _onCalendarDayPress: DateCallbackHandler = (day: DateObject) => {
+    this.setState({selectedDay: day.dateString});
   };
 
   render() {
@@ -71,8 +104,32 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
       </TouchableOpacity>
     );
 
+    const markedDates: {[date: string]: any} = {};
+    if (this.state.selectedDay) {
+      markedDates[this.state.selectedDay!] = {selected: true};
+    }
+    for (const appointment of this.state.appointments) {
+      const day = new Date(appointment.timestamp).toISOString().split('T')[0];
+      if (day in markedDates) {
+        markedDates[day].marked = true;
+      } else {
+        markedDates[day] = {marked: true};
+      }
+    }
+
     return (
       <View style={styles.container}>
+        <Calendar
+          firstDay={1}
+          onDayPress={this._onCalendarDayPress}
+          onMonthChange={() => {}}
+          enableSwipeMonths={true}
+          theme={{
+            todayTextColor: '#16cc46',
+            arrowColor: '#16cc46',
+          }}
+          markedDates={markedDates}
+        />
         <FlatList
           style={styles.list}
           data={this.state.appointments}

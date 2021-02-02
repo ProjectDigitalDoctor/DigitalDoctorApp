@@ -35,17 +35,29 @@ type AppointmentListProps = {
 type AppointmentListState = {
   appointments: AppointmentModel[];
   isFetching: boolean;
-  selectedDay?: string;
+  selectedDay: DateObject;
 };
+
+function getCalendarDateTime(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
 
 class AppointmentList extends Component<AppointmentListProps, AppointmentListState> {
   repo: AppointmentRepository = new AppointmentRepository(apiClient);
 
   constructor(props: AppointmentListProps) {
     super(props);
+    const today = new Date();
     this.state = {
       appointments: [],
       isFetching: false,
+      selectedDay: {
+        dateString: getCalendarDateTime(today),
+        day: today.getDate(),
+        month: today.getMonth(),
+        year: today.getFullYear(),
+        timestamp: today.getTime(),
+      },
     };
     this.repo
       .loadCachedAppointments()
@@ -79,7 +91,7 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
   };
 
   _onCalendarDayPress: DateCallbackHandler = (day: DateObject) => {
-    this.setState({selectedDay: day.dateString});
+    this.setState({selectedDay: day});
   };
 
   render() {
@@ -105,11 +117,9 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
     );
 
     const markedDates: {[date: string]: any} = {};
-    if (this.state.selectedDay) {
-      markedDates[this.state.selectedDay!] = {selected: true};
-    }
+    markedDates[this.state.selectedDay!.dateString] = {selected: true};
     for (const appointment of this.state.appointments) {
-      const day = new Date(appointment.timestamp).toISOString().split('T')[0];
+      const day = getCalendarDateTime(new Date(appointment.timestamp));
       if (day in markedDates) {
         markedDates[day].marked = true;
       } else {
@@ -117,12 +127,16 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
       }
     }
 
+    const filteredAppointments = this.state.appointments.filter((appointment) => {
+      const date = new Date(appointment.timestamp);
+      return date.getMonth() + 1 === this.state.selectedDay.month && date.getDate() === this.state.selectedDay.day;
+    });
+
     return (
       <View style={styles.container}>
         <Calendar
           firstDay={1}
           onDayPress={this._onCalendarDayPress}
-          onMonthChange={() => {}}
           enableSwipeMonths={true}
           theme={{
             todayTextColor: '#16cc46',
@@ -132,7 +146,7 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
         />
         <FlatList
           style={styles.list}
-          data={this.state.appointments}
+          data={filteredAppointments}
           renderItem={appointmentElement}
           keyExtractor={(item) => item.id.toString()}
           onRefresh={this.loadAppointments}

@@ -7,6 +7,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 type PrescriptionListProps = {
   navigation: any;
+  route: any;
 };
 
 type PrescriptionListState = {
@@ -55,6 +56,13 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
         />
       ),
     });
+  }
+
+  componentDidUpdate() {
+    if (this.props.route.params?.refresh === true) {
+      this.props.route.params.refresh = false;
+      this.loadPrescriptions();
+    }
   }
 
   _onPrescriptionPress = (prescription: PrescriptionModel) => {

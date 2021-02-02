@@ -8,6 +8,7 @@ import PrescriptionRepository from '../../api/prescriptionRepository';
 import apiClient from '../../api/anonymousClient';
 import QRCode from 'react-native-qrcode-generator';
 import OfferModel from '../../api/models/offer';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface PrescriptionScreenState {
   prescription: PrescriptionModel;
@@ -30,10 +31,37 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
   }
 
   componentDidMount() {
-    this.props.navigation.setOptions({title: this.state.prescription.drug.name});
+    this.props.navigation.setOptions({
+      title: this.state.prescription.drug.name,
+      headerLeft: () => (
+        <Icon.Button
+          name="arrow-back"
+          size={25}
+          backgroundColor="#32a852"
+          onPress={() => {
+            this.props.navigation.goBack();
+          }}
+        />
+      ),
+    });
   }
 
-  _goBack = () => this.props.navigation.goBack();
+  componentDidUpdate(prevProps: PrescriptionScreenProps, prevState: PrescriptionScreenState) {
+    if (prevState.prescription.redeemed !== this.state.prescription.redeemed) {
+      this.props.navigation.setOptions({
+        headerLeft: () => (
+          <Icon.Button
+            name="arrow-back"
+            size={25}
+            backgroundColor="#32a852"
+            onPress={() => {
+              this.props.navigation.navigate('Prescriptions', {refresh: true});
+            }}
+          />
+        ),
+      });
+    }
+  }
 
   _orderOffer = (offer: OfferModel) => {
     Alert.alert(

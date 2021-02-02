@@ -15,7 +15,6 @@ import PrescriptionScreen from './PrescriptionScreen';
 import AppointmentScreen from './AppointmentScreen';
 import AppointmentVideoChatScreen from './AppointmentVideoChatScreen';
 
-
 const FindDoctorStack = createStackNavigator();
 const PrescriptionsOverviewStack = createStackNavigator();
 const AppointmentsStack = createStackNavigator();
@@ -82,22 +81,7 @@ const PrescriptionsListStackView = ({navigation}: {navigation: any}) => {
           ),
         }}
       />
-      <PrescriptionsOverviewStack.Screen
-        name="PrescriptionScreen"
-        component={PrescriptionScreen}
-        options={{
-          headerLeft: () => (
-            <Icon.Button
-              name="arrow-back"
-              size={25}
-              backgroundColor="#32a852"
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
-          ),
-        }}
-      />
+      <PrescriptionsOverviewStack.Screen name="PrescriptionScreen" component={PrescriptionScreen} />
     </PrescriptionsOverviewStack.Navigator>
   );
 };

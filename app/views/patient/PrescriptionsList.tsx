@@ -34,8 +34,7 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
 
   loadPrescriptions = () => {
     this.setState({isFetching: true});
-    let repo = new PrescriptionRepository(apiClient);
-    repo
+    this.repo
       .getAllPrescriptions()
       .then((prescriptions) => this.setState({prescriptions, isFetching: false}))
       .catch((error) => {

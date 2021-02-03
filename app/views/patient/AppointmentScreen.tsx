@@ -78,7 +78,7 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
         {this.state.now > videoAllowEndDate && (
           <Text style={styles.cantJoinText}>Termin ist in der Vergangenheit!</Text>
         )}
-        {this.state.now < videoAllowStartDate && this.state.now > videoAllowEndDate && (
+        {this.state.now > videoAllowStartDate && this.state.now < videoAllowEndDate && (
           <Button title="Termin beitreten!" onPress={this._joinAppointment} color="#3083DC" />
         )}
       </View>

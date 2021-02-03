@@ -14,10 +14,12 @@ import AppointmentList from './AppointmentList';
 import PrescriptionScreen from './PrescriptionScreen';
 import AppointmentScreen from './AppointmentScreen';
 import AppointmentVideoChatScreen from './AppointmentVideoChatScreen';
+import MedicalCertificatesList from './MedicalCertificatesList';
 
 const FindDoctorStack = createStackNavigator();
 const PrescriptionsOverviewStack = createStackNavigator();
 const AppointmentsStack = createStackNavigator();
+const MedicalCertificatesStack = createStackNavigator();
 
 const FindDoctorStackView = ({navigation}: {navigation: any}) => {
   return (
@@ -142,6 +144,39 @@ const AppointmentListStackView = ({navigation}: {navigation: any}) => {
   );
 };
 
+const MedicalCertificatesListStackView = ({navigation}: {navigation: any}) => {
+  return (
+    <MedicalCertificatesStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#32a852',
+        },
+        headerTintColor: '#fff',
+        headerBackTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <MedicalCertificatesStack.Screen
+        name="MedicalCertificates"
+        component={MedicalCertificatesList}
+        options={{
+          title: 'Krankschreibungen',
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              size={33}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
+    </MedicalCertificatesStack.Navigator>
+  );
+};
+
 const Tab = createBottomTabNavigator();
 
 const TabScreen = () => {
@@ -177,6 +212,14 @@ const TabScreen = () => {
         options={{
           tabBarLabel: 'Rezepte',
           tabBarIcon: ({color, size}) => <FontAwesome5 name="prescription-bottle" color={color} size={size} />,
+        }}
+      />
+      <Tab.Screen
+        name="MedicalCertificatesList"
+        component={MedicalCertificatesListStackView}
+        options={{
+          tabBarLabel: 'Krankschreibungen',
+          tabBarIcon: ({color, size}) => <FontAwesome5 name="file-medical" color={color} size={size} />,
         }}
       />
     </Tab.Navigator>

@@ -6,6 +6,7 @@ import AppointmentModel from '../../api/models/appointment';
 import apiClient from '../../api/anonymousClient';
 import {Calendar, DateCallbackHandler, DateObject, LocaleConfig} from 'react-native-calendars';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ActionButton from 'react-native-action-button';
 
 LocaleConfig.locales.de = {
   monthNames: [
@@ -144,6 +145,9 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
           }}
           markedDates={markedDates}
         />
+        {filteredAppointments.length === 0 && (
+          <Text style={styles.noAppointmentsText}>Keine Termine an diesem Tag!</Text>
+        )}
         <FlatList
           style={styles.list}
           data={filteredAppointments}
@@ -151,6 +155,13 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
           keyExtractor={(item) => item.id.toString()}
           onRefresh={this.loadAppointments}
           refreshing={this.state.isFetching}
+        />
+        <ActionButton
+          buttonColor="#32a852"
+          offsetY={15}
+          onPress={() => {
+            this.props.navigation.navigate('FindDoctor');
+          }}
         />
       </View>
     );
@@ -177,5 +188,10 @@ const styles = StyleSheet.create({
   },
   details: {
     fontSize: 14,
+  },
+  noAppointmentsText: {
+    alignSelf: 'center',
+    marginTop: 10,
+    fontSize: 17,
   },
 });

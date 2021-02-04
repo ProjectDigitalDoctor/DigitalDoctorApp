@@ -12,7 +12,7 @@ import {
   TwilioVideoParticipantView,
 } from 'react-native-twilio-video-webrtc';
 import AppointmentRepository from '../../api/appointmentRepository';
-import apiClient from '../../api/anonymousClient';
+import apiClient from '../../api/authenticatedClient';
 import AppointmentRoomModel from '../../api/models/appointmentRoom';
 import {ActivityIndicator} from 'react-native-paper';
 

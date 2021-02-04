@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ToastAndroid, TouchableOpacity, FlatList} from 'react-native';
-import apiClient from '../../api/anonymousClient';
+import apiClient from '../../api/authenticatedClient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MedicalCertificateModel from '../../api/models/medicalCertificate';
 import MedicalCertificateRepository from '../../api/medicalCertificateRepository';

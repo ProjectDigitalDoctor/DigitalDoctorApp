@@ -5,7 +5,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
 import PrescriptionModel from '../../api/models/prescription';
 import PrescriptionRepository from '../../api/prescriptionRepository';
-import apiClient from '../../api/anonymousClient';
+import apiClient from '../../api/authenticatedClient';
 import QRCode from 'react-native-qrcode-generator';
 import OfferModel from '../../api/models/offer';
 import Icon from 'react-native-vector-icons/Ionicons';

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ToastAndroid} from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native';
-import apiClient from '../../api/anonymousClient';
+import apiClient from '../../api/authenticatedClient';
 import DoctorRepository from '../../api/doctorRepository';
 import DoctorModel from '../../api/models/doctor';
 

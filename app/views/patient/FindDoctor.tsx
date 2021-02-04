@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {TextInput, Button, View, StyleSheet, Text} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import { event } from 'react-native-reanimated';
+import DatePicker from 'react-native-date-picker';
 
 type FindDoctorProps = {
   navigation: any;
@@ -17,6 +17,7 @@ class FindDoctor extends Component<FindDoctorProps> {
     profession: 'Allgemeinmediziner',
     city: '',
     citySearchIsFocused: false,
+    appointmentDate: new Date(),
   }
 
   _goBack = () => this.props.navigation.goBack();
@@ -56,6 +57,12 @@ class FindDoctor extends Component<FindDoctorProps> {
             onFocus={this.handleCitySearchFocus}
             onBlur={this.handleCitySearchBlur}
             underlineColorAndroid={this.state.citySearchIsFocused ? '#428AF8' : '#D3D3D3'}
+          />
+          <DatePicker
+            date={this.state.appointmentDate}
+            onDateChange={date => this.setState({appointmentDate:date})}
+            androidVariant='nativeAndroid'
+            locale='de-de'
           />
           <Button title="Suche Arzt" onPress={() => this._onFindDoctorSearch(this.state.profession, this.state.city)} />
         </View>

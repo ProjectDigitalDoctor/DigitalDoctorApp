@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {TextInput, Button, View, StyleSheet, Text} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import { event } from 'react-native-reanimated';
 
 type FindDoctorProps = {
   navigation: any;
@@ -15,6 +16,7 @@ class FindDoctor extends Component<FindDoctorProps> {
   state = {
     profession: 'Allgemeinmediziner',
     city: '',
+    citySearchIsFocused: false,
   }
 
   _goBack = () => this.props.navigation.goBack();
@@ -22,6 +24,14 @@ class FindDoctor extends Component<FindDoctorProps> {
   _onFindDoctorSearch = (profession:any, city:any) => {
     this.props.navigation.push('DoctorList', {profession: profession, city: city});
   };
+
+  handleCitySearchFocus = () => {
+    this.setState({citySearchIsFocused: true});
+  }
+
+  handleCitySearchBlur = () => {
+    this.setState({citySearchIsFocused: false});
+  }
 
   render() {
     return (
@@ -38,10 +48,14 @@ class FindDoctor extends Component<FindDoctorProps> {
           </Picker>
           <Text style={styles.item}>Suchgebiet</Text>
           <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginVertical: 10 }}
+            style={{ height: 40,  marginVertical: 10 }}
             onChangeText={(text) => {this.setState({city:text})}}
             value={this.state.city}
             autoCompleteType = {'postal-code'}
+            selectionColor={'#428AF8'}
+            onFocus={this.handleCitySearchFocus}
+            onBlur={this.handleCitySearchBlur}
+            underlineColorAndroid={this.state.citySearchIsFocused ? '#428AF8' : '#D3D3D3'}
           />
           <Button title="Suche Arzt" onPress={() => this._onFindDoctorSearch(this.state.profession, this.state.city)} />
         </View>

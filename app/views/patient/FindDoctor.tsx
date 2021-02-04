@@ -22,8 +22,8 @@ class FindDoctor extends Component<FindDoctorProps> {
 
   _goBack = () => this.props.navigation.goBack();
 
-  _onFindDoctorSearch = (profession:any, city:any) => {
-    this.props.navigation.push('DoctorList', {profession: profession, city: city});
+  _onFindDoctorSearch = (profession:any, city:any, appointmentDate: any) => {
+    this.props.navigation.push('DoctorList', {profession: profession, city: city, appointmentDate: appointmentDate});
   };
 
   handleCitySearchFocus = () => {
@@ -62,9 +62,9 @@ class FindDoctor extends Component<FindDoctorProps> {
             date={this.state.appointmentDate}
             onDateChange={date => this.setState({appointmentDate:date})}
             androidVariant='nativeAndroid'
-            locale='de-de'
+            locale='de-DE'
           />
-          <Button title="Suche Arzt" onPress={() => this._onFindDoctorSearch(this.state.profession, this.state.city)} />
+          <Button title="Suche Arzt" onPress={() => this._onFindDoctorSearch(this.state.profession, this.state.city, this.state.appointmentDate.toLocaleString('de-DE'))} />
         </View>
       </View>
     );

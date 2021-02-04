@@ -10,6 +10,7 @@ interface DoctorDetailProps {
 
 interface DoctorDetailState {
   doctor: DoctorModel;
+  appointmentDate: string;
 };
 
 class DoctorDetail extends Component<DoctorDetailProps, DoctorDetailState> {
@@ -18,6 +19,7 @@ class DoctorDetail extends Component<DoctorDetailProps, DoctorDetailState> {
     super(props);
     this.state = {
       doctor: props.route.params.doctor,
+      appointmentDate: props.route.params.appointmentDate,
     }
   }
 
@@ -29,6 +31,7 @@ class DoctorDetail extends Component<DoctorDetailProps, DoctorDetailState> {
       ['Profession:', `${this.state.doctor.profession}`],
       ['Name:', `${this.state.doctor.lastName, this.state.doctor.firstName}`],
       ['Adresse:', `${address.street} ${address.houseNumber}, ${address.zipCode} ${address.city}`],
+      ['Termin:', `${this.state.appointmentDate}`],
     ];
 
     return (

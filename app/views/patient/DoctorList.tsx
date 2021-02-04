@@ -13,8 +13,9 @@ interface DoctorListProps {
 interface DoctorListState {
   doctors: DoctorModel[];
   isFetching: boolean;
-  profession: '';
-  city: '';
+  profession: string;
+  city: string;
+  appointmentDate: string;
 };
 
 class DoctorList extends Component<DoctorListProps, DoctorListState> {
@@ -25,6 +26,7 @@ class DoctorList extends Component<DoctorListProps, DoctorListState> {
       isFetching: false,
       profession: props.route.params.profession,
       city: props.route.params.city,
+      appointmentDate: props.route.params.appointmentDate,
     };
   }
 
@@ -53,7 +55,7 @@ class DoctorList extends Component<DoctorListProps, DoctorListState> {
   }
 
   _onDoctorPress = (doctor: DoctorModel) => {
-    this.props.navigation.push('DoctorDetail', {doctor: doctor});
+    this.props.navigation.push('DoctorDetail', {doctor: doctor, appointmentDate: this.state.appointmentDate});
   };
 
   render() {

@@ -2,7 +2,6 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -15,6 +14,8 @@ import PrescriptionScreen from './PrescriptionScreen';
 import AppointmentScreen from './AppointmentScreen';
 import AppointmentVideoChatScreen from './AppointmentVideoChatScreen';
 import MedicalCertificatesList from './MedicalCertificatesList';
+import DoctorDetail from './DoctorDetail';
+import DoctorList from './DoctorList';
 
 const FindDoctorStack = createStackNavigator();
 const PrescriptionsOverviewStack = createStackNavigator();
@@ -45,6 +46,40 @@ const FindDoctorStackView = ({navigation}: {navigation: any}) => {
               backgroundColor="#32a852"
               onPress={() => {
                 navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
+      <FindDoctorStack.Screen
+        name="DoctorList"
+        component={DoctorList}
+        options={{
+          title:'Arztsuche',
+          headerLeft: () => (
+            <Icon.Button
+              name="arrow-back"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+        }}
+      />
+      <FindDoctorStack.Screen
+        name="DoctorDetail"
+        component={DoctorDetail}
+        options={{
+          title:'Arztsuche',
+          headerLeft: () => (
+            <Icon.Button
+              name="arrow-back"
+              size={25}
+              backgroundColor="#32a852"
+              onPress={() => {
+                navigation.goBack();
               }}
             />
           ),

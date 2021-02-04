@@ -6,7 +6,7 @@ import 'intl/locale-data/jsonp/de-DE';
 import PrescriptionModel from '../../api/models/prescription';
 import PrescriptionRepository from '../../api/prescriptionRepository';
 import apiClient from '../../api/authenticatedClient';
-import QRCode from 'react-native-qrcode-generator';
+//import QRCode from 'react-native-qrcode-generator';
 import OfferModel from '../../api/models/offer';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -131,11 +131,11 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
       </TouchableOpacity>
     );
 
+    // <QRCode value={this.state.qrCodeValue!} size={200} bgColor="#000000" fgColor="lightgrey" />
     return (
       <View style={styles.content}>
         <Modal visible={this.state.qrCodeValue !== undefined} transparent={false} animationType={'slide'}>
           <View style={styles.modal}>
-            <QRCode value={this.state.qrCodeValue!} size={200} bgColor="#000000" fgColor="lightgrey" />
             <Button onPress={() => this.setState({qrCodeValue: undefined})} title="Schließen" color="#3083DC" />
           </View>
         </Modal>

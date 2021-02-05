@@ -31,6 +31,7 @@ LocaleConfig.defaultLocale = 'de';
 
 type AppointmentListProps = {
   navigation: any;
+  route: any;
 };
 
 type AppointmentListState = {
@@ -85,6 +86,13 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
       ),
     });
     this.loadAppointments();
+  }
+
+  componentDidUpdate() {
+    if (this.props.route.params?.refresh === true) {
+      this.props.route.params.refresh = false;
+      this.loadAppointments();
+    }
   }
 
   _onAppointmentPress = (appointment: AppointmentModel) => {

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import {Button, StyleSheet, Text, TouchableHighlightBase, View} from 'react-native';
+import {Button, StyleSheet, Text, ToastAndroid, View} from 'react-native';
 import {Table, Rows} from 'react-native-table-component';
 import AppointmentModel from '../../api/models/appointment';
 import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import AppointmentRepository from '../../api/appointmentRepository';
+import apiClient from '../../api/authenticatedClient';
 
 interface AppointmentScreenState {
   appointment: AppointmentModel;
@@ -17,6 +20,7 @@ interface AppointmentScreenProps {
 
 class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScreenState> {
   interval!: NodeJS.Timeout;
+  repo: AppointmentRepository;
 
   constructor(props: AppointmentScreenProps) {
     super(props);
@@ -24,10 +28,16 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
       appointment: props.route.params.appointment,
       now: new Date(),
     };
+    this.repo = new AppointmentRepository(apiClient);
   }
 
   componentDidMount() {
-    this.props.navigation.setOptions({title: this.state.appointment.reason});
+    this.props.navigation.setOptions({
+      title: this.state.appointment.reason,
+      headerRight: () => (
+        <Icon.Button name="delete" size={25} backgroundColor="#32a852" onPress={this._deleteAppointment} />
+      ),
+    });
     this.interval = setInterval(() => this.setState({now: new Date()}), 1000);
   }
 
@@ -39,6 +49,18 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
 
   _joinAppointment = () =>
     this.props.navigation.push('AppointmentVideoChatScreen', {appointmentID: this.state.appointment.id});
+
+  _deleteAppointment = () => {
+    if (new Date() > new Date(this.state.appointment.timestamp)) {
+      ToastAndroid.show('Angefangene oder alte Termin können nicht gelöscht werden!', ToastAndroid.LONG);
+      return;
+    }
+
+    this.repo
+      .deleteAppointment(this.state.appointment.id)
+      .then(() => this.props.navigation.navigate('Appointments', {refresh: true}))
+      .catch((error) => ToastAndroid.show('Löschen des Termins fehlgeschlagen', ToastAndroid.LONG));
+  };
 
   render = () => {
     const dateFormat = new Intl.DateTimeFormat('de-DE', {

@@ -72,4 +72,11 @@ export default class AppointmentRepository {
         throw error;
       });
   }
+
+  async deleteAppointment(id: number): Promise<void> {
+    this.client.delete(`appointment/${id}`).catch((error) => {
+      console.log(`failed to delete appointment: ${error}`);
+      throw error;
+    });
+  }
 }

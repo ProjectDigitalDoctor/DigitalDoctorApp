@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Button, Modal, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
+import {Alert, Button, Image, Modal, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import {Table, Rows, TableWrapper, Cell} from 'react-native-table-component';
 import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
@@ -131,11 +131,18 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
       </TouchableOpacity>
     );
 
-    // <QRCode value={this.state.qrCodeValue!} size={200} bgColor="#000000" fgColor="lightgrey" />
     return (
       <View style={styles.content}>
         <Modal visible={this.state.qrCodeValue !== undefined} transparent={false} animationType={'slide'}>
           <View style={styles.modal}>
+            <Image
+              style={styles.qrCode}
+              source={{
+                uri: `https://api.qrserver.com/v1/create-qr-code/?size=180x180&bgcolor=d3d3d3&data=${encodeURIComponent(
+                  this.state.qrCodeValue!,
+                )}`,
+              }}
+            />
             <Button onPress={() => this.setState({qrCodeValue: undefined})} title="Schließen" color="#3083DC" />
           </View>
         </Modal>
@@ -223,5 +230,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 150,
     backgroundColor: 'lightgrey',
+  },
+  qrCode: {
+    height: 180,
+    width: 180,
   },
 });

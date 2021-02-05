@@ -14,16 +14,20 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import TabScreen from './app/views/patient/TabScreen';
 import DrawerContent from './app/views/patient/DrawerContent';
-import Settings from './app/views/patient/Settings';
+import StartScreen from './app/views/patient/StartScreen';
+import LoginScreen from './app/views/patient/LoginScreen';
+import SettingsScreen from './app/views/patient/SettingsScreen';
 
 const DrawerNav = createDrawerNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <DrawerNav.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+      <DrawerNav.Navigator drawerContent={(props) => <DrawerContent {...props} />} initialRouteName="Start">
+        <DrawerNav.Screen name="Start" component={StartScreen} />
+        <DrawerNav.Screen name="Login" component={LoginScreen} />
+        <DrawerNav.Screen name="Settings" component={SettingsScreen} />
         <DrawerNav.Screen name="TabScreen" component={TabScreen} />
-        <DrawerNav.Screen name="Settings" component={Settings} />
       </DrawerNav.Navigator>
     </NavigationContainer>
   );

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ToastAndroid, TouchableOpacity, FlatList} from 'react-native';
-import apiClient from '../../api/authenticatedClient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MedicalCertificateModel from '../../api/models/medicalCertificate';
 import MedicalCertificateRepository from '../../api/medicalCertificateRepository';
@@ -18,7 +17,7 @@ type MedicalCertificatesListState = {
 };
 
 class MedicalCertificatesList extends Component<MedicalCertificatesListProps, MedicalCertificatesListState> {
-  repo: MedicalCertificateRepository = new MedicalCertificateRepository(apiClient);
+  repo: MedicalCertificateRepository = new MedicalCertificateRepository();
 
   constructor(props: MedicalCertificatesListProps) {
     super(props);

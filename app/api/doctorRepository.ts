@@ -1,15 +1,13 @@
 import {AxiosInstance} from 'axios';
+import {getClient} from './client';
 import DoctorModel from './models/doctor';
 
 export default class DoctorRepository {
-  client: AxiosInstance;
-
-  constructor(client: AxiosInstance) {
-    this.client = client;
-  }
+  client: Promise<AxiosInstance> = getClient();
 
   async getAllDoctors(): Promise<DoctorModel[]> {
-    return this.client
+    const client = await this.client;
+    return client
       .get<DoctorModel[]>('doctor/search')
       .then(async (res) => {
         return res.data;

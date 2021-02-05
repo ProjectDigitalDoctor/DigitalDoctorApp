@@ -2,16 +2,13 @@ import {AxiosInstance} from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppointmentModel from './models/appointment';
 import AppointmentRoomModel from './models/appointmentRoom';
+import {getClient} from './client';
 
 const AppointmentsCacheKey = 'APPOINTMENTS_CACHE';
 
 export default class AppointmentRepository {
-  client: AxiosInstance;
+  client: Promise<AxiosInstance> = getClient();
   appointmentsCache?: AppointmentModel[] = undefined;
-
-  constructor(client: AxiosInstance) {
-    this.client = client;
-  }
 
   async _saveCache(appointments: AppointmentModel[]) {
     this.appointmentsCache = appointments;
@@ -37,7 +34,8 @@ export default class AppointmentRepository {
   }
 
   async getAppointment(id: number): Promise<AppointmentModel> {
-    return this.client
+    const client = await this.client;
+    return client
       .get<AppointmentModel>(`appointment/${id}`)
       .then(async (res) => {
         return res.data;
@@ -49,7 +47,8 @@ export default class AppointmentRepository {
   }
 
   async getAllAppointments(): Promise<AppointmentModel[]> {
-    return this.client
+    const client = await this.client;
+    return client
       .get<AppointmentModel[]>('appointment')
       .then(async (res) => {
         this._saveCache(res.data);
@@ -62,7 +61,8 @@ export default class AppointmentRepository {
   }
 
   async joinAppointment(id: number): Promise<AppointmentRoomModel> {
-    return this.client
+    const client = await this.client;
+    return client
       .post<AppointmentRoomModel>(`appointment/${id}/join`)
       .then(async (res) => {
         return res.data;
@@ -74,7 +74,8 @@ export default class AppointmentRepository {
   }
 
   async deleteAppointment(id: number): Promise<void> {
-    this.client.delete(`appointment/${id}`).catch((error) => {
+    const client = await this.client;
+    client.delete(`appointment/${id}`).catch((error) => {
       console.log(`failed to delete appointment: ${error}`);
       throw error;
     });

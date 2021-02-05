@@ -12,7 +12,6 @@ import {
   TwilioVideoParticipantView,
 } from 'react-native-twilio-video-webrtc';
 import AppointmentRepository from '../../api/appointmentRepository';
-import apiClient from '../../api/authenticatedClient';
 import AppointmentRoomModel from '../../api/models/appointmentRoom';
 import {ActivityIndicator} from 'react-native-paper';
 
@@ -74,7 +73,7 @@ class AppointmentVideoChatScreen extends Component<AppointmentVideoChatScreenPro
       }
     });
 
-    let repo = new AppointmentRepository(apiClient);
+    let repo = new AppointmentRepository();
     repo
       .joinAppointment(this.props.route.params.appointmentID)
       .then(this._connect)
@@ -88,7 +87,7 @@ class AppointmentVideoChatScreen extends Component<AppointmentVideoChatScreenPro
   componentWillUnmount() {}
 
   _connect = (appointmentRoom: AppointmentRoomModel) => {
-    this.twilioRef.current.connect({
+    this.twilioRef.current!.connect({
       accessToken: appointmentRoom.accessKey,
       roomName: appointmentRoom.roomName,
     });
@@ -96,17 +95,17 @@ class AppointmentVideoChatScreen extends Component<AppointmentVideoChatScreenPro
   };
 
   _onEndButtonPress = () => {
-    this.twilioRef.current.disconnect();
+    this.twilioRef.current!.disconnect();
   };
 
   _onMuteButtonPress = () => {
-    this.twilioRef.current
-      .setLocalAudioEnabled(!this.state.isAudioEnabled)
+    this.twilioRef
+      .current!.setLocalAudioEnabled(!this.state.isAudioEnabled)
       .then((isEnabled: boolean) => this.setState({isAudioEnabled: isEnabled}));
   };
 
   _onFlipButtonPress = () => {
-    this.twilioRef.current.flipCamera();
+    this.twilioRef.current!.flipCamera();
   };
 
   _onRoomDidConnect: RoomEventCb = ({roomName}: any) => {

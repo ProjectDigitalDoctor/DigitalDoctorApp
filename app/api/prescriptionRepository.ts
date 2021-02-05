@@ -1,16 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AxiosInstance} from 'axios';
+import {getClient} from './client';
 import PrescriptionModel from './models/prescription';
 
 const PrescriptionsCacheKey = 'PRESCRIPTIONS_CACHE';
 
 export default class PrescriptionRepository {
-  client: AxiosInstance;
+  client: Promise<AxiosInstance> = getClient();
   prescriptionCache?: PrescriptionModel[] = undefined;
-
-  constructor(client: AxiosInstance) {
-    this.client = client;
-  }
 
   async _saveCache(prescriptions: PrescriptionModel[]) {
     this.prescriptionCache = prescriptions;
@@ -36,7 +33,8 @@ export default class PrescriptionRepository {
   }
 
   async getPrescription(id: number): Promise<PrescriptionModel> {
-    return this.client
+    const client = await this.client;
+    return client
       .get<PrescriptionModel>(`prescription/${id}`)
       .then(async (res) => {
         return res.data;
@@ -48,7 +46,8 @@ export default class PrescriptionRepository {
   }
 
   async getAllPrescriptions(): Promise<PrescriptionModel[]> {
-    return this.client
+    const client = await this.client;
+    return client
       .get<PrescriptionModel[]>('prescription')
       .then(async (res) => {
         this._saveCache(res.data);
@@ -61,7 +60,8 @@ export default class PrescriptionRepository {
   }
 
   async orderOffer(prescriptionID: number, offerID: number): Promise<{}> {
-    return this.client
+    const client = await this.client;
+    return client
       .post(`prescription/${prescriptionID}/offer/${offerID}/order`)
       .then(async () => {
         return {};

@@ -1,16 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AxiosInstance} from 'axios';
+import {getClient} from './client';
 import MedicalCertificationModel from './models/medicalCertificate';
 
 const MedicalCertificatesCacheKey = 'MEDICAL_CERTIFICATES_CACHE';
 
 export default class MedicalCertificateRepository {
-  client: AxiosInstance;
+  client: Promise<AxiosInstance> = getClient();
   certificatesCache?: MedicalCertificationModel[] = undefined;
-
-  constructor(client: AxiosInstance) {
-    this.client = client;
-  }
 
   async _saveCache(certificates: MedicalCertificationModel[]) {
     this.certificatesCache = certificates;
@@ -36,7 +33,8 @@ export default class MedicalCertificateRepository {
   }
 
   async getMedicalCertificate(id: number): Promise<MedicalCertificationModel> {
-    return this.client
+    const client = await this.client;
+    return client
       .get<MedicalCertificationModel>(`medical-certificate/${id}`)
       .then(async (res) => {
         return res.data;
@@ -48,7 +46,8 @@ export default class MedicalCertificateRepository {
   }
 
   async getAllMedicalCertificates(): Promise<MedicalCertificationModel[]> {
-    return this.client
+    const client = await this.client;
+    return client
       .get<MedicalCertificationModel[]>('medical-certificate')
       .then(async (res) => {
         this._saveCache(res.data);

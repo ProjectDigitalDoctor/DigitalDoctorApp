@@ -5,8 +5,6 @@ import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
 import PrescriptionModel from '../../api/models/prescription';
 import PrescriptionRepository from '../../api/prescriptionRepository';
-import apiClient from '../../api/authenticatedClient';
-//import QRCode from 'react-native-qrcode-generator';
 import OfferModel from '../../api/models/offer';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -21,7 +19,7 @@ interface PrescriptionScreenProps {
 }
 
 class PrescriptionScreen extends Component<PrescriptionScreenProps, PrescriptionScreenState> {
-  repo: PrescriptionRepository = new PrescriptionRepository(apiClient);
+  repo: PrescriptionRepository = new PrescriptionRepository();
 
   constructor(props: PrescriptionScreenProps) {
     super(props);
@@ -94,9 +92,9 @@ class PrescriptionScreen extends Component<PrescriptionScreenProps, Prescription
       });
   };
 
-  _localRedeem = () => {
+  _localRedeem = async () => {
     this.setState({
-      qrCodeValue: `${this.repo.client.defaults.baseURL}prescription/${this.state.prescription.id}/redeem`,
+      qrCodeValue: `${(await this.repo.client).defaults.baseURL}prescription/${this.state.prescription.id}/redeem`,
     });
   };
 

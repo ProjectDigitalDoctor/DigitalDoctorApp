@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, ToastAndroid} from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native';
 import AppointmentRepository from '../../api/appointmentRepository';
 import AppointmentModel from '../../api/models/appointment';
-import apiClient from '../../api/authenticatedClient';
 import {Calendar, DateCallbackHandler, DateObject, LocaleConfig} from 'react-native-calendars';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ActionButton from 'react-native-action-button';
@@ -45,7 +44,7 @@ function getCalendarDateTime(date: Date): string {
 }
 
 class AppointmentList extends Component<AppointmentListProps, AppointmentListState> {
-  repo: AppointmentRepository = new AppointmentRepository(apiClient);
+  repo: AppointmentRepository = new AppointmentRepository();
 
   constructor(props: AppointmentListProps) {
     super(props);

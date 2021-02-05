@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, ToastAndroid, TouchableOpacity, FlatList} from 'react-native';
 import PrescriptionModel from '../../api/models/prescription';
 import PrescriptionRepository from '../../api/prescriptionRepository';
-import apiClient from '../../api/authenticatedClient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 type PrescriptionListProps = {
@@ -17,7 +16,7 @@ type PrescriptionListState = {
 };
 
 class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionListState> {
-  repo: PrescriptionRepository = new PrescriptionRepository(apiClient);
+  repo: PrescriptionRepository = new PrescriptionRepository();
 
   constructor(props: PrescriptionListProps) {
     super(props);

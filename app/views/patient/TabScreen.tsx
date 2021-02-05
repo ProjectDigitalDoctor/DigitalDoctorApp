@@ -55,7 +55,7 @@ const FindDoctorStackView = ({navigation}: {navigation: any}) => {
         name="DoctorList"
         component={DoctorList}
         options={{
-          title:'Arztsuche',
+          title: 'Arztsuche',
           headerLeft: () => (
             <Icon.Button
               name="arrow-back"
@@ -72,7 +72,7 @@ const FindDoctorStackView = ({navigation}: {navigation: any}) => {
         name="DoctorDetail"
         component={DoctorDetail}
         options={{
-          title:'Arztsuche',
+          title: 'Arztsuche',
           headerLeft: () => (
             <Icon.Button
               name="arrow-back"

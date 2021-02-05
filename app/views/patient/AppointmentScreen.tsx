@@ -6,7 +6,6 @@ import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AppointmentRepository from '../../api/appointmentRepository';
-import apiClient from '../../api/authenticatedClient';
 
 interface AppointmentScreenState {
   appointment: AppointmentModel;
@@ -28,7 +27,7 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
       appointment: props.route.params.appointment,
       now: new Date(),
     };
-    this.repo = new AppointmentRepository(apiClient);
+    this.repo = new AppointmentRepository();
   }
 
   componentDidMount() {
@@ -59,7 +58,7 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
     this.repo
       .deleteAppointment(this.state.appointment.id)
       .then(() => this.props.navigation.navigate('Appointments', {refresh: true}))
-      .catch((error) => ToastAndroid.show('Löschen des Termins fehlgeschlagen', ToastAndroid.LONG));
+      .catch(() => ToastAndroid.show('Löschen des Termins fehlgeschlagen', ToastAndroid.LONG));
   };
 
   render = () => {

@@ -82,4 +82,6 @@ export async function login(creds: Credentials): Promise<boolean> {
   return isLoggedIn();
 }
 
-export async function logout(): Promise<void> {}
+export async function logout(): Promise<void> {
+  AsyncStorage.clear();
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, Button, ToastAndroid} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {login} from '../../api/client';
 
 const LoginScreen = ({navigation}: {navigation: any}) => {
@@ -14,6 +14,10 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
     } else {
       ToastAndroid.show('Login fehlgeschlagen!', ToastAndroid.LONG);
     }
+  };
+
+  const onRegister = () => {
+    navigation.navigate('Register');
   };
 
   return (
@@ -43,6 +47,9 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
       <View style={styles.buttonView}>
         <Button title="Login" onPress={onLogin} color="#3083DC" />
       </View>
+      <TouchableOpacity onPress={onRegister}>
+        <Text style={styles.register}>Jetzt Registrieren!</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -74,5 +81,10 @@ const styles = StyleSheet.create({
   buttonView: {
     marginTop: 20,
     width: 150,
+  },
+  register: {
+    marginTop: 30,
+    color: '#3083DC',
+    textDecorationLine: 'underline',
   },
 });

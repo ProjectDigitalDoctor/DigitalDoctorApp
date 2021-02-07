@@ -17,6 +17,7 @@ import DrawerContent from './app/views/patient/DrawerContent';
 import StartScreen from './app/views/patient/StartScreen';
 import LoginScreen from './app/views/patient/LoginScreen';
 import SettingsScreen from './app/views/patient/SettingsScreen';
+import RegisterScreen from './app/views/patient/RegisterScreen';
 
 const DrawerNav = createDrawerNavigator();
 
@@ -26,6 +27,7 @@ const App = () => {
       <DrawerNav.Navigator drawerContent={(props) => <DrawerContent {...props} />} initialRouteName="Start">
         <DrawerNav.Screen name="Start" component={StartScreen} />
         <DrawerNav.Screen name="Login" component={LoginScreen} />
+        <DrawerNav.Screen name="Register" component={RegisterScreen} />
         <DrawerNav.Screen name="Settings" component={SettingsScreen} />
         <DrawerNav.Screen name="TabScreen" component={TabScreen} />
       </DrawerNav.Navigator>

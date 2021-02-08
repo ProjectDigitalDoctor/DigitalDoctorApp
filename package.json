@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.4",
@@ -21,6 +22,8 @@
     "axios": "^0.21.1",
     "base-64": "^1.0.0",
     "intl": "^1.2.5",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-action-button": "^2.8.5",

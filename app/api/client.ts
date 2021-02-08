@@ -23,10 +23,14 @@ async function setCredentials(creds: Credentials): Promise<void> {
   await AsyncStorage.setItem(PasswordKey, creds.password ? creds.password : '');
 }
 
-export async function getClient(): Promise<AxiosInstance> {
-  const creds = await getCredentials();
-  if (!creds.username || !creds.password) {
-    throw new Error('Username and/or password not saved.');
+export async function getClient(anonymous?: boolean): Promise<AxiosInstance> {
+  let creds: Credentials = {username: '', password: ''};
+
+  if (!anonymous) {
+    creds = await getCredentials();
+    if (!creds.username || !creds.password) {
+      throw new Error('Username and/or password not saved.');
+    }
   }
 
   const client = axios.create({
@@ -34,10 +38,12 @@ export async function getClient(): Promise<AxiosInstance> {
     headers: {
       Accept: 'application/json',
     },
-    auth: {
-      username: creds.username,
-      password: creds.password,
-    },
+    auth: !anonymous
+      ? {
+          username: creds.username!,
+          password: creds.password!,
+        }
+      : undefined,
     timeout: 2000,
   });
 

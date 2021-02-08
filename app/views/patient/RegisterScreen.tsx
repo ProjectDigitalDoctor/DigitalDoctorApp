@@ -1,8 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, Button} from 'react-native';
+import {View, Text, StyleSheet, Image, Button, ToastAndroid} from 'react-native';
 import {ScrollView, TextInput, TouchableOpacity} from 'react-native-gesture-handler';
+import {login} from '../../api/client';
+import PatientModel from '../../api/models/patient';
+import PatientRepository from '../../api/patientRepository';
 
 const RegisterScreen = ({navigation}: {navigation: any}) => {
+  const rep: PatientRepository = new PatientRepository();
+
   const [firstName, onChangeFirstName] = React.useState('');
   const [lastName, onChangeLastName] = React.useState('');
   const [username, onChangeUsername] = React.useState('');
@@ -20,7 +25,43 @@ const RegisterScreen = ({navigation}: {navigation: any}) => {
     navigation.navigate('Login');
   };
 
-  const onRegister = () => {};
+  const onRegister = async () => {
+    const newPatient: PatientModel = {
+      firstName,
+      lastName,
+      username,
+      password,
+      address: {
+        street: homeStreet,
+        houseNumber: homeHouseNumber,
+        zipCode: homeZipCode,
+        city: homeCity,
+      },
+      workplace: {
+        name: workName,
+        mailAddress: workMail,
+      },
+      insuranceCard: {
+        insuranceNumber,
+        insurance: {
+          name: insuranceName,
+        },
+      },
+    };
+
+    try {
+      await rep.registerPatient(newPatient);
+      const res = await login({username, password});
+      if (res) {
+        navigation.navigate('TabScreen');
+      } else {
+        ToastAndroid.show('Login nach Registrierung fehlgeschlagen!', ToastAndroid.LONG);
+      }
+    } catch (error) {
+      console.error('Failed to regiter new patient: ', error);
+      ToastAndroid.show('Registrierung fehlgeschlagen!', ToastAndroid.LONG);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scroll}>

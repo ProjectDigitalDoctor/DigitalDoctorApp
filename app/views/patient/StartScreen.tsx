@@ -6,9 +6,15 @@ import {isLoggedIn} from '../../api/client';
 const StartScreen = ({navigation}: {navigation: any}) => {
   isLoggedIn().then((res) => {
     if (res) {
-      navigation.navigate('TabScreen');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'TabScreen'}],
+      });
     } else {
-      navigation.navigate('Login');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
     }
   });
 

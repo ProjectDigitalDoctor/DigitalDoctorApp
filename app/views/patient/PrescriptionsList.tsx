@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ToastAndroid, TouchableOpacity, FlatList} from '
 import PrescriptionModel from '../../api/models/prescription';
 import PrescriptionRepository from '../../api/prescriptionRepository';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type PrescriptionListProps = {
   navigation: any;
@@ -47,11 +48,14 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
     this.loadPrescriptions();
     this.props.navigation.setOptions({
       headerRight: () => (
-        <FontAwesome5.Button
-          name="archive"
-          backgroundColor="#32a852"
-          onPress={() => this.setState({showOutdated: !this.state.showOutdated})}
-        />
+        <View style={styles.buttonRow}>
+          <FontAwesome5.Button
+            name="archive"
+            backgroundColor="#32a852"
+            onPress={() => this.setState({showOutdated: !this.state.showOutdated})}
+          />
+          <MaterialCommunityIcons.Button name="reload" backgroundColor="#32a852" onPress={this.loadPrescriptions} />
+        </View>
       ),
     });
   }
@@ -151,5 +155,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     alignSelf: 'center',
     marginTop: 10,
+  },
+  buttonRow: {
+    flexDirection: 'row',
   },
 });

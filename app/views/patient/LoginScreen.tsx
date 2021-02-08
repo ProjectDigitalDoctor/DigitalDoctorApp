@@ -10,7 +10,10 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
   const onLogin = async () => {
     const res = await login({username, password});
     if (res) {
-      navigation.navigate('TabScreen');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'TabScreen'}],
+      });
     } else {
       ToastAndroid.show('Login fehlgeschlagen!', ToastAndroid.LONG);
     }

@@ -53,7 +53,10 @@ const RegisterScreen = ({navigation}: {navigation: any}) => {
       await rep.registerPatient(newPatient);
       const res = await login({username, password});
       if (res) {
-        navigation.navigate('TabScreen');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'TabScreen'}],
+        });
       } else {
         ToastAndroid.show('Login nach Registrierung fehlgeschlagen!', ToastAndroid.LONG);
       }

@@ -6,6 +6,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/de-DE';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AppointmentRepository from '../../api/appointmentRepository';
+import {grey100} from 'react-native-paper/lib/typescript/styles/colors';
 
 interface AppointmentScreenState {
   appointment: AppointmentModel;
@@ -102,6 +103,7 @@ class AppointmentScreen extends Component<AppointmentScreenProps, AppointmentScr
         {this.state.now > videoAllowStartDate && this.state.now < videoAllowEndDate && (
           <Button title="Termin beitreten!" onPress={this._joinAppointment} color="#3083DC" />
         )}
+        <Text style={styles.hiddenID}>{this.state.appointment.id}</Text>
       </View>
     );
   };
@@ -132,5 +134,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 10,
     fontSize: 17,
+  },
+  hiddenID: {
+    fontSize: 12,
+    color: 'grey',
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
 });

@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ToastAndroid, TouchableOpacity, FlatList} from '
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MedicalCertificateModel from '../../api/models/medicalCertificate';
 import MedicalCertificateRepository from '../../api/medicalCertificateRepository';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type MedicalCertificatesListProps = {
   navigation: any;
@@ -48,11 +49,14 @@ class MedicalCertificatesList extends Component<MedicalCertificatesListProps, Me
     this.loadCertificates();
     this.props.navigation.setOptions({
       headerRight: () => (
-        <FontAwesome5.Button
-          name="archive"
-          backgroundColor="#32a852"
-          onPress={() => this.setState({showOutdated: !this.state.showOutdated, selectedCertificate: undefined})}
-        />
+        <View style={styles.buttonRow}>
+          <FontAwesome5.Button
+            name="archive"
+            backgroundColor="#32a852"
+            onPress={() => this.setState({showOutdated: !this.state.showOutdated, selectedCertificate: undefined})}
+          />
+          <MaterialCommunityIcons.Button name="reload" backgroundColor="#32a852" onPress={this.loadCertificates} />
+        </View>
       ),
     });
   }
@@ -170,5 +174,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     alignSelf: 'center',
     marginTop: 10,
+  },
+  buttonRow: {
+    flexDirection: 'row',
   },
 });

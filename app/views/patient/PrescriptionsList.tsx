@@ -103,8 +103,9 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
 
     return (
       <View style={styles.container}>
-        {!this.state.showOutdated && <Text style={styles.info}>Aktuelle</Text>}
-        {this.state.showOutdated && <Text style={styles.info}>Eingelößte & Abgelaufene</Text>}
+        {!this.state.showOutdated && <Text style={styles.header}>Aktuelle</Text>}
+        {this.state.showOutdated && <Text style={styles.header}>Eingelößte & Abgelaufene</Text>}
+        {filteredPrescriptions.length === 0 && <Text style={styles.info}>Keine Rezepte gefunden.</Text>}
         <FlatList
           style={styles.list}
           data={filteredPrescriptions}
@@ -121,7 +122,7 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
 export default PrescriptionsList;
 
 const styles = StyleSheet.create({
-  info: {
+  header: {
     fontSize: 15,
     fontWeight: 'bold',
     alignSelf: 'center',
@@ -145,5 +146,10 @@ const styles = StyleSheet.create({
   },
   details: {
     fontSize: 12,
+  },
+  info: {
+    fontSize: 14,
+    alignSelf: 'center',
+    marginTop: 10,
   },
 });

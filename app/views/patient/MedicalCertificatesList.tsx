@@ -106,8 +106,9 @@ class MedicalCertificatesList extends Component<MedicalCertificatesListProps, Me
             </Text>
           </View>
         )}
-        {!this.state.showOutdated && <Text style={styles.info}>Aktuelle</Text>}
-        {this.state.showOutdated && <Text style={styles.info}>Abgelaufene</Text>}
+        {!this.state.showOutdated && <Text style={styles.header}>Aktuelle</Text>}
+        {this.state.showOutdated && <Text style={styles.header}>Abgelaufene</Text>}
+        {filteredCertificates.length === 0 && <Text style={styles.info}>Keine Krankschreibungen gefunden.</Text>}
         <FlatList
           style={styles.list}
           data={filteredCertificates}
@@ -124,7 +125,7 @@ class MedicalCertificatesList extends Component<MedicalCertificatesListProps, Me
 export default MedicalCertificatesList;
 
 const styles = StyleSheet.create({
-  info: {
+  header: {
     fontSize: 15,
     fontWeight: 'bold',
     alignSelf: 'center',
@@ -164,5 +165,10 @@ const styles = StyleSheet.create({
     borderBottomColor: 'darkgrey',
     borderBottomWidth: 2,
     padding: 20,
+  },
+  info: {
+    fontSize: 14,
+    alignSelf: 'center',
+    marginTop: 10,
   },
 });

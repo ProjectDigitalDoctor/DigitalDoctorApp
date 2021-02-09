@@ -6,7 +6,7 @@ import PatientModel from '../../api/models/patient';
 import PatientRepository from '../../api/patientRepository';
 
 const RegisterScreen = ({navigation}: {navigation: any}) => {
-  const rep: PatientRepository = new PatientRepository();
+  const rep: PatientRepository = new PatientRepository(true);
 
   const [firstName, onChangeFirstName] = React.useState('');
   const [lastName, onChangeLastName] = React.useState('');

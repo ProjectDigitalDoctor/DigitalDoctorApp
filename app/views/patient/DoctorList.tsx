@@ -62,8 +62,9 @@ class DoctorList extends Component<DoctorListProps, DoctorListState> {
       <TouchableOpacity onPress={() => this._onDoctorPress(item)}>
         <View style={styles.item}>
           <Text style={styles.title}>
-            {item.lastName} ({item.profession})
+            {item.firstName} {item.lastName}
           </Text>
+          <Text style={styles.details}>{item.profession}</Text>
           <Text style={styles.details}>
             {item.address.street} {item.address.houseNumber} , {item.address.zipCode} {item.address.city}
           </Text>
@@ -73,6 +74,7 @@ class DoctorList extends Component<DoctorListProps, DoctorListState> {
 
     return (
       <View style={styles.container}>
+        {this.state.doctors.length === 0 && <Text style={styles.info}>Keine passenden Ärzte gefunden.</Text>}
         <FlatList
           style={styles.list}
           data={this.state.doctors}
@@ -106,5 +108,10 @@ const styles = StyleSheet.create({
   },
   details: {
     fontSize: 14,
+  },
+  info: {
+    fontSize: 14,
+    alignSelf: 'center',
+    marginTop: 10,
   },
 });

@@ -6,6 +6,14 @@ import {getClient} from './client';
 
 const AppointmentsCacheKey = 'APPOINTMENTS_CACHE';
 
+export interface RequestAppointment {
+  patientID: number;
+  doctorID: number;
+  reason: string;
+  timestamp: string;
+  duration: number;
+}
+
 export default class AppointmentRepository {
   client: Promise<AxiosInstance> = getClient();
   appointmentsCache?: AppointmentModel[] = undefined;
@@ -75,9 +83,27 @@ export default class AppointmentRepository {
 
   async deleteAppointment(id: number): Promise<void> {
     const client = await this.client;
-    client.delete(`appointment/${id}`).catch((error) => {
-      console.log(`failed to delete appointment: ${error}`);
-      throw error;
-    });
+    return client
+      .delete(`appointment/${id}`)
+      .then((res) => {
+        return;
+      })
+      .catch((error) => {
+        console.log(`failed to delete appointment: ${error}`);
+        throw error;
+      });
+  }
+
+  async createAppointment(reqAppointment: RequestAppointment): Promise<void> {
+    const client = await this.client;
+    return client
+      .post('appointment', reqAppointment)
+      .then((res) => {
+        return;
+      })
+      .catch((error) => {
+        console.log(`failed to create appointment: ${error}`);
+        throw error;
+      });
   }
 }

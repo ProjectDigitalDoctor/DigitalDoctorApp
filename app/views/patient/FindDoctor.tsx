@@ -7,8 +7,17 @@ type FindDoctorProps = {
   navigation: any;
 };
 
-class FindDoctor extends Component<FindDoctorProps> {
+function roundTimeQuarterHour(time: Date): Date {
+  var timeToReturn = new Date(time);
 
+  timeToReturn.setMilliseconds(Math.ceil(timeToReturn.getMilliseconds() / 1000) * 1000);
+  timeToReturn.setSeconds(Math.ceil(timeToReturn.getSeconds() / 60) * 60);
+  timeToReturn.setMinutes(Math.ceil(timeToReturn.getMinutes() / 15) * 15);
+
+  return timeToReturn;
+}
+
+class FindDoctor extends Component<FindDoctorProps> {
   constructor(props: FindDoctorProps) {
     super(props);
   }
@@ -18,21 +27,13 @@ class FindDoctor extends Component<FindDoctorProps> {
     city: '',
     citySearchIsFocused: false,
     appointmentDate: new Date(),
-  }
+  };
 
   _goBack = () => this.props.navigation.goBack();
 
-  _onFindDoctorSearch = (profession:any, city:any, appointmentDate: any) => {
+  _onFindDoctorSearch = (profession: string, city: string, appointmentDate: String) => {
     this.props.navigation.push('DoctorList', {profession: profession, city: city, appointmentDate: appointmentDate});
   };
-
-  handleCitySearchFocus = () => {
-    this.setState({citySearchIsFocused: true});
-  }
-
-  handleCitySearchBlur = () => {
-    this.setState({citySearchIsFocused: false});
-  }
 
   render() {
     return (
@@ -41,30 +42,38 @@ class FindDoctor extends Component<FindDoctorProps> {
           <Picker
             selectedValue={this.state.profession}
             style={{width: '100%'}}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({profession: itemValue})
-            }>
+            onValueChange={(itemValue) => this.setState({profession: itemValue})}>
             <Picker.Item label="Allgemeinmediziner" value="allgemeinmediziner" />
             <Picker.Item label="HNO" value="hno" />
           </Picker>
-          <Text style={styles.item}>Suchgebiet</Text>
+          <Text style={styles.item}>Suchgebiet (Stadt/Dorf)</Text>
           <TextInput
-            style={{ height: 40,  marginVertical: 10 }}
-            onChangeText={(text) => {this.setState({city:text})}}
+            style={{height: 40, marginVertical: 10}}
+            placeholder={'z.B.: Hintertupfingen oder Mühlheim'}
+            onChangeText={(text) => {
+              this.setState({city: text});
+            }}
             value={this.state.city}
-            autoCompleteType = {'postal-code'}
-            selectionColor={'#428AF8'}
-            onFocus={this.handleCitySearchFocus}
-            onBlur={this.handleCitySearchBlur}
-            underlineColorAndroid={this.state.citySearchIsFocused ? '#428AF8' : '#D3D3D3'}
+            autoCompleteType={'postal-code'}
+            textContentType={'addressCity'}
+            underlineColorAndroid={'#32a852'}
           />
           <DatePicker
             date={this.state.appointmentDate}
-            onDateChange={date => this.setState({appointmentDate:date})}
-            androidVariant='nativeAndroid'
-            locale='de-DE'
+            onDateChange={(date) => this.setState({appointmentDate: date})}
+            androidVariant="nativeAndroid"
+            locale="de-DE"
           />
-          <Button title="Suche Arzt" onPress={() => this._onFindDoctorSearch(this.state.profession, this.state.city, this.state.appointmentDate.toLocaleString('de-DE'))} />
+          <Button
+            title="Suche Arzt"
+            onPress={() =>
+              this._onFindDoctorSearch(
+                this.state.profession,
+                this.state.city,
+                roundTimeQuarterHour(this.state.appointmentDate).toISOString(),
+              )
+            }
+          />
         </View>
       </View>
     );

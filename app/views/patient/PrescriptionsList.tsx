@@ -108,7 +108,7 @@ class PrescriptionsList extends Component<PrescriptionListProps, PrescriptionLis
     return (
       <View style={styles.container}>
         {!this.state.showOutdated && <Text style={styles.header}>Aktuelle</Text>}
-        {this.state.showOutdated && <Text style={styles.header}>Eingelößte & Abgelaufene</Text>}
+        {this.state.showOutdated && <Text style={styles.header}>Eingelöste & Abgelaufene</Text>}
         {filteredPrescriptions.length === 0 && <Text style={styles.info}>Keine Rezepte gefunden.</Text>}
         <FlatList
           style={styles.list}

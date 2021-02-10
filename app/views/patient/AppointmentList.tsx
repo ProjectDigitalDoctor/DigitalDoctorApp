@@ -55,7 +55,7 @@ class AppointmentList extends Component<AppointmentListProps, AppointmentListSta
       selectedDay: {
         dateString: getCalendarDateTime(today),
         day: today.getDate(),
-        month: today.getMonth(),
+        month: today.getMonth() + 1,
         year: today.getFullYear(),
         timestamp: today.getTime(),
       },

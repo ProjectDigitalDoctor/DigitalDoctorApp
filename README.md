@@ -5,13 +5,16 @@ It has been built for the "Mobile Software Engineering" course at the HS Mannhei
 
 The app is built in React Native and is to be used together with the [DigitalDoctor Backend Server](https://github.com/ProjectDigitalDoctor/DigitalDoctorBackend).
 
-**It only has been tested with Android!**
+**The app only has been tested with Android!**
+
+**Also with some phones there are known issues regarding cut-off text: https://github.com/facebook/react-native/issues/25481**
 
 ## Getting started
 
 ### Install the APK file
 
 A pre-packaged [apk file](android/app-release.apk) that can be installed on an Android Device is located in the android folder.
+During installation "Install anyway" has to be selected as the APK is self-signed.
 
 ### Compile & Run the App yourself
 

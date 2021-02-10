@@ -63,6 +63,7 @@ class FindDoctor extends Component<FindDoctorProps> {
             onDateChange={(date) => this.setState({appointmentDate: date})}
             androidVariant="nativeAndroid"
             locale="de-DE"
+            is24hourSource="locale"
           />
           <Button
             title="Suche Arzt"

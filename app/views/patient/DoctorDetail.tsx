@@ -18,11 +18,7 @@ interface DoctorDetailState {
 }
 
 function getJavaTimestamp(date: Date): string {
-  // TODO: Figure out why this timezone stuff does not work as expected
-  const adjustedDate = new Date(date);
-  adjustedDate.setHours(adjustedDate.getHours() + 1);
-
-  const iso = adjustedDate.toISOString();
+  const iso = date.toISOString();
 
   const tSplit = iso.split('T');
   return `${tSplit[0]} ${tSplit[1].split('.')[0]}`;

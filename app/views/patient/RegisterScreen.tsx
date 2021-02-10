@@ -8,18 +8,18 @@ import PatientRepository from '../../api/patientRepository';
 const RegisterScreen = ({navigation}: {navigation: any}) => {
   const rep: PatientRepository = new PatientRepository(true);
 
-  const [firstName, onChangeFirstName] = React.useState('');
-  const [lastName, onChangeLastName] = React.useState('');
-  const [username, onChangeUsername] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
-  const [homeStreet, onChangeHomeStreet] = React.useState('');
-  const [homeHouseNumber, onChangeHomeHouseNumber] = React.useState('');
-  const [homeZipCode, onChangeHomeZipCode] = React.useState('');
-  const [homeCity, onChangeHomeCity] = React.useState('');
-  const [workName, onChangeWorkName] = React.useState('');
-  const [workMail, onChangeWorkMail] = React.useState('');
-  const [insuranceNumber, onChangeInsuranceNumber] = React.useState('');
-  const [insuranceName, onChangeInsuranceName] = React.useState('');
+  const [firstName, onChangeFirstName] = React.useState('Sarah');
+  const [lastName, onChangeLastName] = React.useState('Müller');
+  const [username, onChangeUsername] = React.useState('sarah.mueller');
+  const [password, onChangePassword] = React.useState('password123');
+  const [homeStreet, onChangeHomeStreet] = React.useState('Prager Str.');
+  const [homeHouseNumber, onChangeHomeHouseNumber] = React.useState('77');
+  const [homeZipCode, onChangeHomeZipCode] = React.useState('82247');
+  const [homeCity, onChangeHomeCity] = React.useState('Fürstenfeldbruck');
+  const [workName, onChangeWorkName] = React.useState('Realty Depot');
+  const [workMail, onChangeWorkMail] = React.useState('info@realty-depot.de');
+  const [insuranceNumber, onChangeInsuranceNumber] = React.useState('AOK');
+  const [insuranceName, onChangeInsuranceName] = React.useState('2184382332');
 
   const onLogin = async () => {
     navigation.navigate('Login');

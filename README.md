@@ -1,5 +1,7 @@
 # DigitalDoctor App
 
+Submission for MSO 2020/2021 by Nils Clauss, Jeffrey Rietzler, Max Heidinger and Can Arsoy.
+
 This app is a prototype of an app for digital doctor appointments, prescriptions and medical certificates.
 It has been built for the "Mobile Software Engineering" course at the HS Mannheim.
 
